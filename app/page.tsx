@@ -13,7 +13,7 @@ export default function Home() {
         HeaRam&apos;s Gallery
       </header>
       <section className="flex justify-center">
-        <div className="grid-cols-auto-fill-96 grid w-[80vw] justify-items-center gap-12">
+        <div className="grid w-[80vw] grid-cols-auto-fill-96 justify-items-center gap-12">
           {artWorks.map(({ Component, title }, i) => (
             <div
               key={i}
