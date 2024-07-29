@@ -1,7 +1,11 @@
 import { RippleCanvas } from './components/canvas/Ripple/RippleCanvs';
+import ThunderCanvas from './components/canvas/Thunder/ThunderCanvas';
 
 export default function Home() {
-  const artWorks: ArtWork[] = [{ title: 'ripples', Component: RippleCanvas }];
+  const artWorks: ArtWork[] = [
+    { title: 'ripples', Component: RippleCanvas },
+    { title: 'thunder', Component: ThunderCanvas },
+  ];
 
   return (
     <main>
@@ -16,6 +20,13 @@ export default function Home() {
               className="relative h-60 w-96 overflow-hidden rounded-xl"
             >
               <Component />
+              <div
+                className="absolute top-0 h-full w-full"
+                style={{
+                  background:
+                    'linear-gradient(0deg, #000000A0, transparent,transparent)',
+                }}
+              ></div>
               <div className="absolute bottom-4 left-4 select-none text-4xl font-bold text-white">
                 {title}
               </div>
