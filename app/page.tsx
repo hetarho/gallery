@@ -15,7 +15,7 @@ export default function Home() {
               key={i}
               className="relative h-60 w-96 overflow-hidden rounded-xl"
             >
-              <Component></Component>
+              <Component />
               <div className="absolute bottom-4 left-4 select-none text-4xl font-bold text-white">
                 {title}
               </div>
