@@ -1,5 +1,6 @@
 'use client';
 
+import { DragEndEvent, useDndMonitor } from '@dnd-kit/core';
 import clsx from 'clsx';
 import {
   CanvasHTMLAttributes,
@@ -17,25 +18,31 @@ type CanvasProps = Omit<
   'onClick'
 > & {
   reSizeCallback?: (width: number, height: number) => void;
-  onClick?: ({ width, height, x, y }: CanvasOnClickProps) => void;
+  onClick?: (props: CanvasEventProps) => void;
+  onDropEnd?: (props: CanvasEventProps) => void;
 };
 
-export type CanvasOnClickProps = {
+export interface CanvasEventProps {
   width: number;
   height: number;
   x: number;
   y: number;
-};
+  data?: object;
+}
 
 const Canvas = forwardRef(
   (
-    { reSizeCallback, className, onClick, ...props }: CanvasProps,
+    { reSizeCallback, className, onDropEnd, onClick, ...props }: CanvasProps,
     canvasRef: Ref<HTMLCanvasElement> | undefined,
   ) => {
     const divRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
+
+    useDndMonitor({
+      onDragEnd: handleCanvasDropEnd,
+    });
 
     useEffect(() => {
       if (divRef?.current !== null) {
@@ -60,6 +67,29 @@ const Canvas = forwardRef(
       setHeight(divRef.current?.offsetHeight ?? 0);
     }
 
+    function handleCanvasDropEnd(event: DragEndEvent) {
+      if (canvasRef) {
+        const canvas = (canvasRef as RefObject<HTMLCanvasElement>).current;
+        if (!canvas) return;
+        const { clientX, clientY } = event.activatorEvent as PointerEvent;
+        const { x: deltaX, y: deltaY } = event.delta;
+
+        const rect = canvas.getBoundingClientRect();
+        const x = clientX + deltaX - rect.left;
+        const y = clientY + deltaY - rect.top;
+
+        if (onDropEnd) {
+          onDropEnd({
+            width,
+            height,
+            x,
+            y,
+            data: event.active.data,
+          });
+        }
+      }
+    }
+
     const handleCanvasClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
       if (canvasRef) {
         const canvas = (canvasRef as RefObject<HTMLCanvasElement>).current;
@@ -77,8 +107,6 @@ const Canvas = forwardRef(
             y,
           });
         }
-
-        console.log(`Mouse coordinates: (${x}, ${y})`);
       }
     };
 

@@ -1,65 +1,50 @@
 'use client';
 
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { RippleCanvas } from '../components/canvas/Ripple/RippleCanvas';
-import clsx from 'clsx';
+import { DndContext, useDraggable } from '@dnd-kit/core';
+import React from 'react';
 
 export default function RipplePage() {
   return (
-    <DragDropContext
-      onDragEnd={(e) => {
-        console.log(e);
+    <div className="flex h-screen w-screen justify-center">
+      <DndContext>
+        <RippleCanvas color="#4ad6b5"></RippleCanvas>
+        <div className="fixed bottom-20 flex items-center justify-center gap-4 rounded-3xl bg-black bg-opacity-10 p-4">
+          <DraggableCircle id="1" size={16} />
+          <DraggableCircle id="2" size={24} />
+          <DraggableCircle id="3" size={32} />
+        </div>
+      </DndContext>
+    </div>
+  );
+}
+
+function DraggableCircle({ id, size }: { id: string; size: number }) {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: id,
+    data: {
+      size,
+    },
+  });
+
+  const style = transform
+    ? {
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+        boxShadow: '0px 0px 14px 6px white',
+      }
+    : { transition: '0.3s' };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={{
+        width: size,
+        height: size,
+        ...style,
       }}
-    >
-      <Droppable droppableId="0">
-        {(provided) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            className="flex h-screen w-screen justify-center"
-          >
-            <RippleCanvas color="#4ad6b5"></RippleCanvas>
-            <div className="fixed top-10 flex items-center justify-center gap-4 rounded-3xl bg-black bg-opacity-10 p-4">
-              <Draggable draggableId="0" index={0}>
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    className={clsx('h-4 w-4 rounded-full bg-white', {
-                      'shadow-2xl shadow-white': snapshot.isDragging,
-                    })}
-                  ></div>
-                )}
-              </Draggable>
-              <Draggable draggableId="1" index={1}>
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    className={clsx('h-8 w-8 rounded-full bg-white', {
-                      'shadow-2xl shadow-white': snapshot.isDragging,
-                    })}
-                  ></div>
-                )}
-              </Draggable>
-              <Draggable draggableId="2" index={2}>
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    className={clsx('h-10 w-10 rounded-full bg-white', {
-                      'shadow-2xl shadow-white': snapshot.isDragging,
-                    })}
-                  ></div>
-                )}
-              </Draggable>
-            </div>
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+      {...listeners}
+      {...attributes}
+      className="rounded-full bg-white"
+    />
   );
 }

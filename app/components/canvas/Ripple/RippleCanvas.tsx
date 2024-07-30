@@ -1,7 +1,7 @@
 'use client';
 import chroma from 'chroma-js';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import Canvas, { CanvasOnClickProps } from '../Canvas';
+import Canvas, { CanvasEventProps } from '../Canvas';
 import { Ripple } from './Ripple';
 
 type RippleCanvasProp = {
@@ -64,15 +64,15 @@ export function RippleCanvas({ color }: RippleCanvasProp) {
     [brightCircleList, innerRippleList],
   );
 
-  function onClick({ x, y, width, height }: CanvasOnClickProps) {
-    console.log(innerRippleList.length);
+  function addRipple({ x, y, width, height, data }: CanvasEventProps) {
+    const size = (data as { current: { size: number } }).current.size;
     setInnerRippleList((prev) => [
       ...prev.filter((ripple) => !ripple.isEnd),
       new Ripple({
         color,
         depth: 1,
-        frequency: Math.random() * 20 + 15,
-        rippleNum: Math.round(Math.random() * 10 + 2),
+        frequency: size * 2,
+        rippleNum: Math.round(size / 10),
         height,
         width,
         x,
@@ -83,8 +83,8 @@ export function RippleCanvas({ color }: RippleCanvasProp) {
 
   return (
     <Canvas
-      onClick={onClick}
       ref={canvasRef}
+      onDropEnd={addRipple}
       reSizeCallback={resizeFunction}
       style={{ background: color }}
     ></Canvas>
