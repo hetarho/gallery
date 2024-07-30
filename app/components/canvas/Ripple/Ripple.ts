@@ -53,6 +53,8 @@ export class Ripple {
         ? Math.ceil(this.curr / this.frequency)
         : this.rippleNum;
 
+    const globalOpacity = Math.min(1, 255 / this.curr);
+
     for (let i = 0; i < currentRipplesNum; i++) {
       const radius =
         Math.max(0, this.curr - totalAmount - (this.curr % this.frequency)) +
@@ -70,7 +72,8 @@ export class Ripple {
             (maxDistance + totalAmount),
       );
 
-      const colorOpacity = Math.floor(200 * Math.pow(0.9, radius / 10)) / 200;
+      const colorOpacity =
+        (globalOpacity * Math.floor(255 * Math.pow(0.9, radius / 10))) / 255;
 
       gradient.addColorStop(0, chroma(this.color).alpha(0).hex());
       gradient.addColorStop(
