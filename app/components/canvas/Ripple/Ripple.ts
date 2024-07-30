@@ -26,7 +26,6 @@ export class Ripple {
     this.depth = depth;
     this.color = color;
     this.curr = 0;
-    // this.speed = Math.random() * 0.5 + 0.5;
     this.speed = 1;
     this.size = Math.random() * 30 + 30;
   }
