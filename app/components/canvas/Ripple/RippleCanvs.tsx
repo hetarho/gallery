@@ -1,12 +1,22 @@
 'use client';
 import chroma from 'chroma-js';
 import { useRef, useState } from 'react';
-import Canvas from '../Canvas';
+import Canvas, { CanvasOnClickProps } from '../Canvas';
 import { Ripple } from './Ripple';
 
-export function RippleCanvas() {
+type RippleCanvasProp = {
+  rippleList: Ripple[];
+  color: string;
+  interactive?: boolean;
+};
+
+export function RippleCanvas({
+  color,
+  rippleList,
+  interactive = false,
+}: RippleCanvasProp) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [color] = useState('#33a8de');
+  const [innerRippleList, setInnerRippleList] = useState<Ripple[]>([]);
 
   function resizeFunction(width: number, height: number) {
     const canvas = canvasRef.current;
@@ -19,33 +29,32 @@ export function RippleCanvas() {
 
     let requestAnimationId: number;
 
-    const lightColor = chroma(color).brighten(0.2).hex();
-    const darkColor = chroma(color).darken(0.2).hex();
-
-    const ripplesList = Array.from({ length: Math.round(width / 10) }).map(
-      () => {
-        return new Ripple({
-          colors: [
-            {
-              color: lightColor,
-              stop: 0.33,
-            },
-            {
-              color: darkColor,
-              stop: 0.67,
-            },
-          ],
-          startDelay: Math.random() * 150,
-          bgColor: color,
-          frequency: Math.random() * 20 + 15,
-          rippleNum: Math.random() * 10 + 2,
-          delay: Math.random() * 100 + 10,
-          height,
-          width,
-          x: Math.random() * width,
-          y: Math.random() * height,
-        });
-      },
+    setInnerRippleList(
+      interactive
+        ? Array.from({ length: Math.round(width / 10) }).map(() => {
+            return new Ripple({
+              colors: [
+                {
+                  color: chroma(color).brighten(0.2).hex(),
+                  stop: 0.33,
+                },
+                {
+                  color: chroma(color).darken(0.2).hex(),
+                  stop: 0.67,
+                },
+              ],
+              startDelay: Math.random() * 150,
+              bgColor: color,
+              frequency: Math.random() * 20 + 15,
+              rippleNum: Math.random() * 10 + 2,
+              delay: Math.random() * 100 + 10,
+              height,
+              width,
+              x: Math.random() * width,
+              y: Math.random() * height,
+            });
+          })
+        : rippleList,
     );
 
     const brightCircleList = Array.from(Array(Math.round(width / 7))).map(
@@ -58,7 +67,7 @@ export function RippleCanvas() {
       // Canvas 초기화
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      ripplesList.forEach((ripples) => ripples.draw(ctx));
+      innerRippleList.forEach((ripples) => ripples.draw(ctx));
       brightCircleList.forEach((brightCircle) => brightCircle.draw(ctx));
 
       requestAnimationId = window.requestAnimationFrame(onAnimation);
@@ -72,8 +81,36 @@ export function RippleCanvas() {
     };
   }
 
+  function onClick({ x, y, width, height }: CanvasOnClickProps) {
+    setInnerRippleList((prev) => [
+      ...prev,
+      new Ripple({
+        colors: [
+          {
+            color: chroma(color).brighten(0.2).hex(),
+            stop: 0.33,
+          },
+          {
+            color: chroma(color).darken(0.2).hex(),
+            stop: 0.67,
+          },
+        ],
+        startDelay: Math.random() * 150,
+        bgColor: color,
+        frequency: Math.random() * 20 + 15,
+        rippleNum: Math.random() * 10 + 2,
+        delay: Math.random() * 100 + 10,
+        height,
+        width,
+        x,
+        y,
+      }),
+    ]);
+  }
+
   return (
     <Canvas
+      onClick={onClick}
       ref={canvasRef}
       reSizeCallback={resizeFunction}
       style={{ background: color }}
