@@ -71,7 +71,7 @@ export function RippleCanvas({ color }: RippleCanvasProp) {
       new Ripple({
         color,
         depth: size / 50,
-        frequency: size,
+        frequency: size / 2,
         rippleNum: Math.round(size / 8),
         height,
         width,

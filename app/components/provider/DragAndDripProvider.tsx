@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  DndContext,
-  MouseSensor,
-  TouchSensor,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core';
+import { DndContext, MouseSensor, useSensor, useSensors } from '@dnd-kit/core';
 
 export default function DragAndDropProvider({
   children,
@@ -14,8 +8,7 @@ export default function DragAndDropProvider({
   children: React.ReactNode;
 }) {
   const mouseSensor = useSensor(MouseSensor);
-  const touchSensor = useSensor(TouchSensor);
-  const sensors = useSensors(mouseSensor, touchSensor);
+  const sensors = useSensors(mouseSensor);
 
   return <DndContext sensors={sensors}>{children}</DndContext>;
 }
