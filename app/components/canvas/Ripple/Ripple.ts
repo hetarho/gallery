@@ -63,10 +63,6 @@ export class Ripple {
         ) +
         i * this.frequency;
 
-      if (i == 0 && this.curr < totalAmount * 2) {
-        console.log(radius);
-      }
-
       const gradient = ctx.createRadialGradient(
         this.x,
         this.y,

@@ -71,6 +71,7 @@ const Canvas = forwardRef(
       if (canvasRef) {
         const canvas = (canvasRef as RefObject<HTMLCanvasElement>).current;
         if (!canvas) return;
+
         const { clientX, clientY } = event.activatorEvent as PointerEvent;
         const { x: deltaX, y: deltaY } = event.delta;
 
