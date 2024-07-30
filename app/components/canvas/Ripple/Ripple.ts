@@ -27,7 +27,7 @@ export class Ripple {
     this.color = color;
     this.curr = 0;
     this.speed = 1;
-    this.size = Math.random() * 30 + 30;
+    this.size = frequency;
   }
 
   draw(ctx: CanvasRenderingContext2D) {
@@ -50,16 +50,22 @@ export class Ripple {
 
     const currentRipplesNum =
       this.curr < totalAmount
-        ? Math.ceil(this.curr / this.frequency)
+        ? Math.floor(this.curr / this.frequency) + 1
         : this.rippleNum;
 
     const globalOpacity = Math.min(1, 255 / this.curr);
 
     for (let i = 0; i < currentRipplesNum; i++) {
       const radius =
-        Math.max(0, this.curr - totalAmount - (this.curr % this.frequency)) +
-        i * this.frequency +
-        (this.curr % this.frequency);
+        Math.max(
+          this.curr % this.frequency,
+          this.curr - totalAmount + this.frequency,
+        ) +
+        i * this.frequency;
+
+      if (i == 0 && this.curr < totalAmount * 2) {
+        console.log(radius);
+      }
 
       const gradient = ctx.createRadialGradient(
         this.x,

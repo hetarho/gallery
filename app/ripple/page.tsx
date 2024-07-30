@@ -2,6 +2,7 @@
 
 import { RippleCanvas } from '../components/canvas/Ripple/RippleCanvas';
 import { DndContext, useDraggable } from '@dnd-kit/core';
+import { motion } from 'framer-motion';
 import React from 'react';
 
 export default function RipplePage() {
@@ -9,11 +10,17 @@ export default function RipplePage() {
     <div className="flex h-screen w-screen justify-center">
       <DndContext>
         <RippleCanvas color="#4ad6b5"></RippleCanvas>
-        <div className="fixed bottom-20 flex items-center justify-center gap-4 rounded-3xl bg-black bg-opacity-10 p-4">
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="fixed bottom-12 flex items-center justify-center gap-6 rounded-full bg-black bg-opacity-10 p-6"
+        >
           <DraggableCircle id="1" size={16} />
           <DraggableCircle id="2" size={24} />
           <DraggableCircle id="3" size={32} />
-        </div>
+          <DraggableCircle id="4" size={48} />
+        </motion.div>
       </DndContext>
     </div>
   );

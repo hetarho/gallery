@@ -70,9 +70,9 @@ export function RippleCanvas({ color }: RippleCanvasProp) {
       ...prev.filter((ripple) => !ripple.isEnd),
       new Ripple({
         color,
-        depth: 1,
-        frequency: size * 2,
-        rippleNum: Math.round(size / 10),
+        depth: size / 50,
+        frequency: size,
+        rippleNum: Math.round(size / 8),
         height,
         width,
         x,

@@ -4,11 +4,21 @@ import Link from 'next/link';
 import ArtFrame from './_ArtFrame';
 import ThunderCanvas from './components/canvas/Thunder/ThunderCanvas';
 import { RippleCanvas } from './components/canvas/Ripple/RippleCanvas';
-import { DndContext } from '@dnd-kit/core';
+import {
+  DndContext,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
 
 export default function Home() {
+  const mouseSensor = useSensor(MouseSensor);
+  const touchSensor = useSensor(TouchSensor);
+  const sensors = useSensors(mouseSensor, touchSensor);
+
   return (
-    <DndContext>
+    <DndContext sensors={sensors}>
       <main>
         <header className="select-none py-20 text-center text-5xl font-extrabold text-white">
           HeaRam&apos;s Gallery
