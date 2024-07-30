@@ -1,6 +1,6 @@
 'use client';
 import chroma from 'chroma-js';
-import { useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Canvas, { CanvasOnClickProps } from '../Canvas';
 import { Ripple } from './Ripple';
 
@@ -12,74 +12,62 @@ type RippleCanvasProp = {
 
 export function RippleCanvas({
   color,
-  rippleList,
-  interactive = false,
+  // rippleList,
+  // interactive = false,
 }: RippleCanvasProp) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [innerRippleList, setInnerRippleList] = useState<Ripple[]>([]);
+  const [brightCircleList, setBrightCircleList] = useState<BrightCircles[]>([]);
 
-  function resizeFunction(width: number, height: number) {
-    const canvas = canvasRef.current;
-    if (!canvas) return; // canvas가 null인지 확인
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return; // context가 null인지 확인
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
 
-    canvas.width = width;
-    canvas.height = height;
-
-    let requestAnimationId: number;
-
-    setInnerRippleList(
-      interactive
-        ? Array.from({ length: Math.round(width / 10) }).map(() => {
-            return new Ripple({
-              colors: [
-                {
-                  color: chroma(color).brighten(0.2).hex(),
-                  stop: 0.33,
-                },
-                {
-                  color: chroma(color).darken(0.2).hex(),
-                  stop: 0.67,
-                },
-              ],
-              startDelay: Math.random() * 150,
-              bgColor: color,
-              frequency: Math.random() * 20 + 15,
-              rippleNum: Math.random() * 10 + 2,
-              delay: Math.random() * 100 + 10,
-              height,
-              width,
-              x: Math.random() * width,
-              y: Math.random() * height,
-            });
-          })
-        : rippleList,
+  useEffect(() => {
+    setBrightCircleList(
+      Array.from(Array(Math.round(100))).map(() => {
+        return new BrightCircles({
+          color,
+          height: height,
+          width: width,
+        });
+      }),
     );
+  }, [color, height, width]);
 
-    const brightCircleList = Array.from(Array(Math.round(width / 7))).map(
-      () => {
-        return new BrightCircles({ color, height, width });
-      },
-    );
+  const resizeFunction = useCallback(
+    (width: number, height: number) => {
+      const canvas = canvasRef.current;
+      if (!canvas) return; // canvas가 null인지 확인
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return; // context가 null인지 확인
 
-    const onAnimation = () => {
-      // Canvas 초기화
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      canvas.width = width;
+      canvas.height = height;
 
-      innerRippleList.forEach((ripples) => ripples.draw(ctx));
-      brightCircleList.forEach((brightCircle) => brightCircle.draw(ctx));
+      setWidth(width);
+      setHeight(height);
 
+      let requestAnimationId: number;
+
+      const onAnimation = () => {
+        // Canvas 초기화
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        innerRippleList.forEach((ripples) => ripples.draw(ctx));
+        brightCircleList.forEach((brightCircle) => brightCircle.draw(ctx));
+
+        requestAnimationId = window.requestAnimationFrame(onAnimation);
+      };
+
+      // 리퀘스트 애니메이션 초기화
       requestAnimationId = window.requestAnimationFrame(onAnimation);
-    };
-
-    // 리퀘스트 애니메이션 초기화
-    requestAnimationId = window.requestAnimationFrame(onAnimation);
-    return () => {
-      // 기존 리퀘스트 애니메이션 캔슬
-      window.cancelAnimationFrame(requestAnimationId);
-    };
-  }
+      return () => {
+        // 기존 리퀘스트 애니메이션 캔슬
+        window.cancelAnimationFrame(requestAnimationId);
+      };
+    },
+    [brightCircleList, innerRippleList],
+  );
 
   function onClick({ x, y, width, height }: CanvasOnClickProps) {
     setInnerRippleList((prev) => [
@@ -95,7 +83,7 @@ export function RippleCanvas({
             stop: 0.67,
           },
         ],
-        startDelay: Math.random() * 150,
+        startDelay: 0,
         bgColor: color,
         frequency: Math.random() * 20 + 15,
         rippleNum: Math.random() * 10 + 2,
