@@ -1,14 +1,15 @@
 'use client';
 
 import { RippleCanvas } from '../components/canvas/Ripple/RippleCanvas';
-import { DndContext, useDraggable } from '@dnd-kit/core';
 import { motion } from 'framer-motion';
 import React from 'react';
+import DragAndDropProvider from '../components/provider/DragAndDripProvider';
+import DraggableCircle from './_DraggableCircle';
 
 export default function RipplePage() {
   return (
     <div className="flex h-screen w-screen justify-center">
-      <DndContext>
+      <DragAndDropProvider>
         <RippleCanvas color="#4ad6b5"></RippleCanvas>
         <motion.div
           initial={{ y: 20, opacity: 0 }}
@@ -21,37 +22,7 @@ export default function RipplePage() {
           <DraggableCircle id="3" size={32} touch-action />
           <DraggableCircle id="4" size={48} touch-action />
         </motion.div>
-      </DndContext>
+      </DragAndDropProvider>
     </div>
-  );
-}
-
-function DraggableCircle({ id, size }: { id: string; size: number }) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: id,
-    data: {
-      size,
-    },
-  });
-
-  const style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-        boxShadow: '0px 0px 14px 6px white',
-      }
-    : { transition: '0.3s' };
-
-  return (
-    <div
-      ref={setNodeRef}
-      style={{
-        width: size,
-        height: size,
-        ...style,
-      }}
-      {...listeners}
-      {...attributes}
-      className="rounded-full bg-white"
-    />
   );
 }
