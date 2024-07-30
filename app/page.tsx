@@ -11,12 +11,11 @@ export default function Home() {
       </header>
       <section className="flex justify-center">
         <div className="grid w-full grid-cols-auto-fill-96 justify-items-center gap-12 sm:w-[80vw]">
-          <Link href={'/ripple'} className="w-full">
+          <Link href={'/ripple'} className="w-full sm:w-96">
             <ArtFrame title="물결">
               <RippleContents />
             </ArtFrame>
           </Link>
-
           <ArtFrame title="번개">
             <ThunderCanvas></ThunderCanvas>
           </ArtFrame>

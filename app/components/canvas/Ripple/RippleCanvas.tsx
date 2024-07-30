@@ -12,6 +12,7 @@ export function RippleCanvas({ color }: RippleCanvasProp) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [innerRippleList, setInnerRippleList] = useState<Ripple[]>([]);
   const [brightCircleList, setBrightCircleList] = useState<BrightCircles[]>([]);
+  const requestAnimationIdRef = useRef(0);
 
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
@@ -30,6 +31,7 @@ export function RippleCanvas({ color }: RippleCanvasProp) {
 
   const resizeFunction = useCallback(
     (width: number, height: number) => {
+      window.cancelAnimationFrame(requestAnimationIdRef.current);
       const canvas = canvasRef.current;
       if (!canvas) return; // canvas가 null인지 확인
       const ctx = canvas.getContext('2d');
@@ -41,8 +43,6 @@ export function RippleCanvas({ color }: RippleCanvasProp) {
       setWidth(width);
       setHeight(height);
 
-      let requestAnimationId: number;
-
       const onAnimation = () => {
         // Canvas 초기화
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -50,14 +50,15 @@ export function RippleCanvas({ color }: RippleCanvasProp) {
         innerRippleList.forEach((ripples) => ripples.draw(ctx));
         brightCircleList.forEach((brightCircle) => brightCircle.draw(ctx));
 
-        requestAnimationId = window.requestAnimationFrame(onAnimation);
+        requestAnimationIdRef.current =
+          window.requestAnimationFrame(onAnimation);
       };
 
       // 리퀘스트 애니메이션 초기화
-      requestAnimationId = window.requestAnimationFrame(onAnimation);
+      requestAnimationIdRef.current = window.requestAnimationFrame(onAnimation);
       return () => {
         // 기존 리퀘스트 애니메이션 캔슬
-        window.cancelAnimationFrame(requestAnimationId);
+        window.cancelAnimationFrame(requestAnimationIdRef.current);
       };
     },
     [brightCircleList, innerRippleList],
