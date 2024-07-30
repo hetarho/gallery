@@ -10,11 +10,7 @@ export default function Home() {
       <section className="flex justify-center">
         <div className="grid w-full grid-cols-auto-fill-96 justify-items-center gap-12 sm:w-[80vw]">
           <ArtFrame title="물결">
-            <RippleCanvas
-              color="#33a8de"
-              rippleList={[]}
-              // interactive
-            ></RippleCanvas>
+            <RippleCanvas color="#33a8de"></RippleCanvas>
           </ArtFrame>
           <ArtFrame title="번개">
             <ThunderCanvas></ThunderCanvas>

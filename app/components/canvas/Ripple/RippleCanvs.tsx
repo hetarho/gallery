@@ -5,16 +5,10 @@ import Canvas, { CanvasOnClickProps } from '../Canvas';
 import { Ripple } from './Ripple';
 
 type RippleCanvasProp = {
-  rippleList: Ripple[];
   color: string;
-  interactive?: boolean;
 };
 
-export function RippleCanvas({
-  color,
-  // rippleList,
-  // interactive = false,
-}: RippleCanvasProp) {
+export function RippleCanvas({ color }: RippleCanvasProp) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [innerRippleList, setInnerRippleList] = useState<Ripple[]>([]);
   const [brightCircleList, setBrightCircleList] = useState<BrightCircles[]>([]);
@@ -70,24 +64,14 @@ export function RippleCanvas({
   );
 
   function onClick({ x, y, width, height }: CanvasOnClickProps) {
+    console.log(innerRippleList.length);
     setInnerRippleList((prev) => [
-      ...prev,
+      ...prev.filter((ripple) => !ripple.isEnd),
       new Ripple({
-        colors: [
-          {
-            color: chroma(color).brighten(0.2).hex(),
-            stop: 0.33,
-          },
-          {
-            color: chroma(color).darken(0.2).hex(),
-            stop: 0.67,
-          },
-        ],
-        startDelay: 0,
-        bgColor: color,
+        color,
+        depth: 1,
         frequency: Math.random() * 20 + 15,
-        rippleNum: Math.random() * 10 + 2,
-        delay: Math.random() * 100 + 10,
+        rippleNum: Math.round(Math.random() * 10 + 2),
         height,
         width,
         x,
