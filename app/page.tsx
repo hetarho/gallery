@@ -1,5 +1,7 @@
-import { RippleCanvas } from './components/canvas/Ripple/RippleCanvs';
+import Link from 'next/link';
+import ArtFrame from './_ArtFrame';
 import ThunderCanvas from './components/canvas/Thunder/ThunderCanvas';
+import RippleContents from './containers/mainContents/RippleContents';
 
 export default function Home() {
   return (
@@ -9,38 +11,17 @@ export default function Home() {
       </header>
       <section className="flex justify-center">
         <div className="grid w-full grid-cols-auto-fill-96 justify-items-center gap-12 sm:w-[80vw]">
-          <ArtFrame title="물결">
-            <RippleCanvas color="#33a8de"></RippleCanvas>
-          </ArtFrame>
+          <Link href={'/ripple'} className="w-full">
+            <ArtFrame title="물결">
+              <RippleContents />
+            </ArtFrame>
+          </Link>
+
           <ArtFrame title="번개">
             <ThunderCanvas></ThunderCanvas>
           </ArtFrame>
         </div>
       </section>
     </main>
-  );
-}
-
-function ArtFrame({
-  children,
-  title,
-}: {
-  children: React.ReactNode;
-  title: string;
-}) {
-  return (
-    <div className="relative h-60 w-full overflow-hidden rounded-xl sm:w-96">
-      {children}
-      {/* <div
-        className="absolute top-0 h-full w-full"
-        style={{
-          background:
-            'linear-gradient(0deg, #000000A0, transparent,transparent)',
-        }}
-      ></div> */}
-      <div className="absolute bottom-4 left-4 select-none text-4xl font-bold text-white">
-        {title}
-      </div>
-    </div>
   );
 }
