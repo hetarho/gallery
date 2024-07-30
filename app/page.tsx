@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import ArtFrame from './_ArtFrame';
 import ThunderCanvas from './components/canvas/Thunder/ThunderCanvas';
-import RippleContents from './containers/mainContents/RippleContents';
+import { RippleCanvas } from './components/canvas/Ripple/RippleCanvas';
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
         <div className="grid w-full grid-cols-auto-fill-96 justify-items-center gap-12 sm:w-[80vw]">
           <Link href={'/ripple'} className="w-full sm:w-96">
             <ArtFrame title="물결">
-              <RippleContents />
+              <RippleCanvas color="#33a8de"></RippleCanvas>
             </ArtFrame>
           </Link>
           <ArtFrame title="번개">

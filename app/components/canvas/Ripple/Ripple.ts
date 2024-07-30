@@ -51,7 +51,7 @@ export class Ripple {
 
     const currentRipplesNum =
       this.curr < totalAmount
-        ? Math.floor(this.curr / this.frequency)
+        ? Math.ceil(this.curr / this.frequency)
         : this.rippleNum;
 
     for (let i = 0; i < currentRipplesNum; i++) {
