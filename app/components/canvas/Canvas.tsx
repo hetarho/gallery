@@ -36,6 +36,7 @@ const Canvas = forwardRef(
     canvasRef: Ref<HTMLCanvasElement> | undefined,
   ) => {
     const divRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+    const [eventTest, setEventTest] = useState('');
 
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
@@ -71,6 +72,8 @@ const Canvas = forwardRef(
       if (canvasRef) {
         const canvas = (canvasRef as RefObject<HTMLCanvasElement>).current;
         if (!canvas) return;
+
+        setEventTest(JSON.stringify(event));
 
         const { clientX, clientY } = event.activatorEvent as PointerEvent;
         const { x: deltaX, y: deltaY } = event.delta;
@@ -119,6 +122,7 @@ const Canvas = forwardRef(
           ref={canvasRef}
           className={clsx('h-full w-full', className)}
         ></canvas>
+        <div className="fixed top-0">{eventTest}</div>
       </div>
     );
   },
