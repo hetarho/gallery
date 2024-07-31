@@ -128,7 +128,7 @@ class BrightCircles {
     this.width = width;
     this.height = height;
     this.alpha = Math.random() * 0.4 + 0.15;
-    this.brightness = Math.random() * 2 + 0.5;
+    this.brightness = Math.random() * 4 - 1;
     this.color = color;
     this.posX = Math.random() * width;
     this.posY = Math.random() * height;
@@ -161,8 +161,8 @@ class BrightCircles {
     this.brightness = this.minMax(
       this.brightness + (Math.random() - 0.5) * 0.1,
       {
-        min: 0.5,
-        max: 2.5,
+        min: -1,
+        max: 3,
       },
     );
 

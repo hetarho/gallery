@@ -27,15 +27,13 @@ export default function RipplePage() {
   const [isOpenColorPalate, setIsOpenColorPalate] = useState(false);
 
   useEffect(() => {
-    if (color !== prevColor) {
-      animate(prevColor, color, {
-        duration: 3,
-        onUpdate: (latest) => {
-          setBrightColor(latest);
-          setRippleColor(latest);
-        },
-      });
-    }
+    animate(prevColor, color, {
+      duration: 3,
+      onUpdate: (latest) => {
+        setBrightColor(latest);
+        setRippleColor(latest);
+      },
+    });
   }, [color, prevColor]);
 
   useEffect(() => {
