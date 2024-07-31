@@ -22,11 +22,11 @@ export default function Home() {
           <TitleText />
         </motion.header>
         <motion.section
-          className="flex justify-center px-10"
+          className="flex justify-center"
           animate={{ opacity: [0, 1] }}
           transition={{ delay: 3 }}
         >
-          <div className="grid w-full grid-cols-auto-fill-96 justify-items-center gap-12 sm:w-[80vw]">
+          <div className="grid w-full justify-items-center gap-12 p-4 sm:w-[80vw] sm:grid-cols-auto-fill-96 sm:p-0">
             <Link href={'/ripple'} className="w-full sm:w-96">
               <ArtFrame title="물결">
                 <RippleCanvas color="#33a8de"></RippleCanvas>
