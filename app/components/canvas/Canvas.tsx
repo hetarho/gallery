@@ -72,21 +72,18 @@ const Canvas = forwardRef(
         const canvas = (canvasRef as RefObject<HTMLCanvasElement>).current;
         if (!canvas) return;
 
-        const { clientX, clientY } = event.activatorEvent as PointerEvent;
-        const { x: deltaX, y: deltaY } = event.delta;
+        if (event.active?.rect?.current?.translated != null) {
+          const { top: y, left: x } = event.active.rect.current.translated;
 
-        const rect = canvas.getBoundingClientRect();
-        const x = clientX + deltaX - rect.left;
-        const y = clientY + deltaY - rect.top;
-
-        if (onDropEnd) {
-          onDropEnd({
-            width,
-            height,
-            x,
-            y,
-            data: event.active.data,
-          });
+          if (onDropEnd) {
+            onDropEnd({
+              width,
+              height,
+              x,
+              y,
+              data: event.active.data,
+            });
+          }
         }
       }
     }
