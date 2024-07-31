@@ -6,9 +6,15 @@ import { Ripple } from './Ripple';
 
 type RippleCanvasProp = {
   color: string;
+  rippleColor?: string;
+  brightColor?: string;
 };
 
-export function RippleCanvas({ color }: RippleCanvasProp) {
+export function RippleCanvas({
+  color,
+  rippleColor,
+  brightColor,
+}: RippleCanvasProp) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [innerRippleList, setInnerRippleList] = useState<Ripple[]>([]);
   const [brightCircleList, setBrightCircleList] = useState<BrightCircles[]>([]);
@@ -21,13 +27,18 @@ export function RippleCanvas({ color }: RippleCanvasProp) {
     setBrightCircleList(
       Array.from(Array(Math.round(100))).map(() => {
         return new BrightCircles({
-          color,
+          color: color,
           height: height,
           width: width,
         });
       }),
     );
   }, [color, height, width]);
+
+  useEffect(() => {
+    if (brightColor !== undefined)
+      brightCircleList.forEach((bright) => (bright.color = brightColor));
+  }, [brightCircleList, brightColor]);
 
   const resizeFunction = useCallback(
     (width: number, height: number) => {
@@ -69,7 +80,7 @@ export function RippleCanvas({ color }: RippleCanvasProp) {
     setInnerRippleList((prev) => [
       ...prev.filter((ripple) => !ripple.isEnd),
       new Ripple({
-        color,
+        color: rippleColor ?? color,
         depth: size / 50,
         frequency: size / 2,
         rippleNum: Math.round(size / 8),
@@ -81,12 +92,17 @@ export function RippleCanvas({ color }: RippleCanvasProp) {
     ]);
   }
 
+  useEffect(() => {
+    if (rippleColor !== undefined)
+      innerRippleList.forEach((ripple) => (ripple.color = rippleColor));
+  }, [innerRippleList, rippleColor]);
+
   return (
     <Canvas
       ref={canvasRef}
       onDropEnd={addRipple}
       reSizeCallback={resizeFunction}
-      style={{ background: color }}
+      style={{ background: color, transition: '3s' }}
     ></Canvas>
   );
 }
