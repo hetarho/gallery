@@ -26,27 +26,16 @@ export class Ripple {
     this.depth = depth;
     this.color = color;
     this.curr = 0;
-    this.speed = 1;
-    this.size = frequency;
+    this.speed = Math.random() + 0.5;
+    this.size = 2 + frequency / 100;
   }
 
   draw(ctx: CanvasRenderingContext2D) {
     if (this.isEnd) {
       return;
     }
-    this.curr += this.speed;
-
     const totalAmount = this.frequency * this.rippleNum;
-
-    const maxDistance = Math.sqrt(
-      Math.pow(this.width / 2 + Math.abs(this.x - this.width / 2), 2) +
-        Math.pow(this.height / 2 + Math.abs(this.y - this.height / 2), 2),
-    );
-
-    if (this.curr > maxDistance + totalAmount) {
-      this.isEnd = true;
-      return;
-    }
+    this.curr += (this.speed * totalAmount) / (totalAmount + this.curr);
 
     const currentRipplesNum =
       this.curr < totalAmount
@@ -54,6 +43,8 @@ export class Ripple {
         : this.rippleNum;
 
     const globalOpacity = Math.min(1, 255 / this.curr);
+
+    let hightestOpacity = 0;
 
     for (let i = 0; i < currentRipplesNum; i++) {
       const radius =
@@ -69,28 +60,36 @@ export class Ripple {
         radius,
         this.x,
         this.y,
-        radius +
-          (this.size * (radius * 5 + (maxDistance + totalAmount))) /
-            (maxDistance + totalAmount),
+        radius * this.size,
       );
 
       const colorOpacity =
         (globalOpacity * Math.floor(255 * Math.pow(0.9, radius / 10))) / 255;
 
+      hightestOpacity = Math.max(colorOpacity, hightestOpacity);
+
       gradient.addColorStop(0, chroma(this.color).alpha(0).hex());
       gradient.addColorStop(
-        1 / 3,
+        2 / 3,
         chroma(this.color).brighten(this.depth).alpha(colorOpacity).hex(),
       );
       gradient.addColorStop(
-        2 / 3,
-        chroma(this.color).darken(this.depth).alpha(colorOpacity).hex(),
+        1 / 3,
+        chroma(this.color)
+          .darken(this.depth / (this.rippleNum - i + 1))
+          .alpha(colorOpacity)
+          .hex(),
       );
 
       gradient.addColorStop(1, chroma(this.color).alpha(0).hex());
 
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, this.width, this.height);
+    }
+
+    if (hightestOpacity < 0.05) {
+      this.isEnd = true;
+      return;
     }
   }
 }
