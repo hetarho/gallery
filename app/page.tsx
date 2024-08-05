@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import ArtFrame from './_ArtFrame';
 import ThunderCanvas from './components/canvas/Thunder/ThunderCanvas';
-import { RippleCanvas } from './components/canvas/Ripple/RippleCanvas';
-import DragAndDropProvider from './components/provider/DragAndDripProvider';
+import DragAndDropProvider from './provider/DragAndDripProvider';
 import TitleText from './_TitleText';
 import { motion } from 'framer-motion';
+import RippleInteractive from './components/canvas/works/RippleInteractive';
 
 export default function Home() {
   return (
@@ -29,7 +29,7 @@ export default function Home() {
           <div className="grid w-full justify-items-center gap-12 sm:w-[80vw] sm:grid-cols-auto-fill-96">
             <Link href={'/ripple'} className="w-full sm:w-96">
               <ArtFrame title="물결">
-                <RippleCanvas color="#33a8de"></RippleCanvas>
+                <RippleInteractive color="#33a8de"></RippleInteractive>
               </ArtFrame>
             </Link>
             <ArtFrame title="번개">

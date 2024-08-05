@@ -1,11 +1,11 @@
 'use client';
 
-import { RippleCanvas } from '../components/canvas/Ripple/RippleCanvas';
-import { animate, motion } from 'framer-motion';
+import { animate, AnimationPlaybackControls, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
-import DragAndDropProvider from '../components/provider/DragAndDripProvider';
+import DragAndDropProvider from '../provider/DragAndDripProvider';
 import DraggableCircle from './_DraggableCircle';
 import chroma from 'chroma-js';
+import RippleInteractive from '../components/canvas/works/RippleInteractive';
 
 const COLORS = [
   '#4ad6b5',
@@ -25,29 +25,36 @@ export default function RipplePage() {
   const [brightColor, setBrightColor] = useState('#4ad6b5');
 
   const [isOpenColorPalate, setIsOpenColorPalate] = useState(false);
+  const [colorAnimController, setColorAnimController] =
+    useState<AnimationPlaybackControls | null>();
 
   useEffect(() => {
-    animate(prevColor, color, {
-      duration: 3,
-      onUpdate: (latest) => {
-        setBrightColor(latest);
-        setRippleColor(latest);
-      },
-    });
+    setColorAnimController(
+      animate(prevColor, color, {
+        duration: 3,
+        onUpdate: (latest) => {
+          setBrightColor(latest);
+          setRippleColor(latest);
+        },
+        onComplete: () => {
+          setPrevColor(color);
+          setColorAnimController(null);
+        },
+        onStop: () => {
+          setPrevColor(color);
+        },
+      }),
+    );
   }, [color, prevColor]);
-
-  useEffect(() => {
-    if (color === brightColor) setPrevColor(color);
-  }, [color, brightColor]);
 
   return (
     <div className="flex h-screen w-screen justify-center">
       <DragAndDropProvider>
-        <RippleCanvas
+        <RippleInteractive
           color={color}
           rippleColor={rippleColor}
           brightColor={brightColor}
-        ></RippleCanvas>
+        ></RippleInteractive>
         <div
           className="fixed top-0 rounded-b-3xl bg-black bg-opacity-20 px-4 py-3 text-white"
           onClick={() => setIsOpenColorPalate((prev) => !prev)}
@@ -70,9 +77,10 @@ export default function RipplePage() {
               return (
                 <div
                   onClick={() => {
+                    if (colorAnimController) {
+                      colorAnimController.cancel();
+                    }
                     setColor(_color);
-                    setRippleColor(_color);
-                    setBrightColor(_color);
                   }}
                   key={color}
                   className="h-10 w-10 rounded-2xl"

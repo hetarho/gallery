@@ -1,7 +1,7 @@
 import chroma from 'chroma-js';
 import { RippleDate } from './Ripple.type';
 
-export class Ripple {
+export default class Ripple {
   x: number;
   y: number;
   rippleNum: number;
