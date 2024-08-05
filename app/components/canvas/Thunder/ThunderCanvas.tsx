@@ -71,8 +71,8 @@ export default function ThunderCanvas() {
       }
 
       return new Thunder({
-        amplitude: 2,
-        frequency: 30,
+        amplitude: 0,
+        frequency: 50,
         width: Math.random() * 2 + 2,
         color: '#FFFFFFF8',
         startPoint: startPoint,

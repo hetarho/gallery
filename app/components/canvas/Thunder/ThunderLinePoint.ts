@@ -10,20 +10,20 @@ export class ThunderLinePoint {
     this.cos = cos ?? 1;
     this.sin = sin ?? 0;
     this.cur = x * y;
-    this.speed = (Math.random() * 10 + 2) / 100;
+    this.speed = (Math.random() * 15 + 4) / 100;
   }
 
   sin: number;
   cos: number;
   cur: number;
   speed: number;
-  max = Math.random() * 20 + 30;
+  max = Math.random() * 5 + 5;
   standardY: number;
   standardX: number;
 
   update() {
     this.cur += this.speed;
-    this.x = this.standardX + Math.sin(this.cur) * this.max * this.cos;
-    this.y = this.standardY + Math.sin(this.cur) * this.max * this.sin;
+    this.x = this.standardX + Math.sin(this.cur) * this.max * this.sin;
+    this.y = this.standardY + Math.sin(this.cur) * this.max * this.cos;
   }
 }
