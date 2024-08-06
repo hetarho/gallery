@@ -6,7 +6,7 @@ import { Thunder } from './Thunder';
 
 export default function ThunderCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [color] = useState('#0B0521');
+  const [color] = useState('linear-gradient(225deg, #8f18ff9d, #000e4f7c)');
 
   function resizeFunction(width: number, height: number) {
     const canvas = canvasRef.current;

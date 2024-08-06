@@ -12,17 +12,17 @@ export default function Home() {
   return (
     <DragAndDropProvider>
       <main>
-        <motion.header className="select-none py-20 text-center text-5xl font-extrabold text-white">
+        <motion.header className="select-none py-10 text-center text-4xl font-extrabold text-white">
           <TitleText />
         </motion.header>
         <motion.section className="flex justify-center px-10">
           <div className="grid w-full justify-items-center gap-12 sm:w-[80vw] sm:grid-cols-auto-fill-96">
             <Link href={'/ripple'} className="w-full sm:w-96">
-              <ArtFrame title="물결">
+              <ArtFrame title="Ripples">
                 <RippleInteractive color="#33a8de"></RippleInteractive>
               </ArtFrame>
             </Link>
-            <ArtFrame title="번개">
+            <ArtFrame title="Thunder">
               <ThunderCanvas></ThunderCanvas>
             </ArtFrame>
           </div>
