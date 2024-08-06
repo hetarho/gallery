@@ -16,8 +16,6 @@ export default function ThunderCanvas() {
     canvas.width = width;
     canvas.height = height;
 
-    let requestAnimationId: number;
-
     const lines = Array.from(Array(20)).map(() => {
       const startPointX =
         Math.random() > 0.5 ? -10 : (Math.random() * width) / 2;
@@ -80,7 +78,13 @@ export default function ThunderCanvas() {
       });
     });
 
+    let requestAnimationId: number;
+    let timer = 0;
+
     const onAnimation = () => {
+      timer++;
+      if (timer > 300) return;
+
       // Canvas 초기화
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       lines.forEach((line) => line.draw(ctx));
