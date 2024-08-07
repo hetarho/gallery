@@ -1,7 +1,6 @@
 'use client';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import Canvas, { CanvasEventProps } from '../Canvas';
-import useCanvas from '@/app/hooks/useCanvas';
+import { useEffect, useRef, useState } from 'react';
+import useCanvas, { CanvasEventProps } from '@/app/hooks/useCanvas';
 import BrightCircles from '../BrightCircle/BrightCircle';
 import Ripple from '../Ripple/Ripple';
 
@@ -17,8 +16,7 @@ export default function RippleInteractive({
   brightColor,
 }: RippleInteractiveProp) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { getCtx, width, height, resize, requestAnimationIdRef } =
-    useCanvas(canvasRef);
+  const { width, height, Canvas } = useCanvas(canvasRef);
   const [innerRippleList, setInnerRippleList] = useState<Ripple[]>([]);
   const [brightCircleList, setBrightCircleList] = useState<BrightCircles[]>([]);
 
@@ -39,46 +37,15 @@ export default function RippleInteractive({
       brightCircleList.forEach((bright) => (bright.color = brightColor));
   }, [brightCircleList, brightColor]);
 
-  const resizeFunction = useCallback(
-    (width: number, height: number) => {
-      resize(width, height);
-    },
-    [resize],
-  );
+  function onAnimation(ctx: CanvasRenderingContext2D) {
+    ctx.clearRect(0, 0, width, height);
 
-  useEffect(() => {
-    window.cancelAnimationFrame(requestAnimationIdRef.current);
-    const onAnimation = () => {
-      const ctx = getCtx();
-      if (ctx === null) return;
-
-      // Canvas 초기화
-      ctx.clearRect(0, 0, width, height);
-
-      innerRippleList.forEach((ripples) => ripples.draw(ctx));
-      brightCircleList.forEach((brightCircle) => brightCircle.draw(ctx));
-
-      requestAnimationIdRef.current = window.requestAnimationFrame(onAnimation);
-    };
-
-    // 리퀘스트 애니메이션 초기화
-    requestAnimationIdRef.current = window.requestAnimationFrame(onAnimation);
-    return () => {
-      // 기존 리퀘스트 애니메이션 캔슬
-      window.cancelAnimationFrame(requestAnimationIdRef.current);
-    };
-  }, [
-    brightCircleList,
-    getCtx,
-    height,
-    innerRippleList,
-    requestAnimationIdRef,
-    width,
-  ]);
+    innerRippleList.forEach((ripples) => ripples.draw(ctx));
+    brightCircleList.forEach((brightCircle) => brightCircle.draw(ctx));
+  }
 
   function addRipple({ x, y, width, height, data }: CanvasEventProps) {
     const size = (data as { current: { size: number } }).current.size;
-    console.log('addRipple');
     setInnerRippleList((prev) => [
       ...prev.filter((ripple) => !ripple.isEnd),
       new Ripple({
@@ -101,9 +68,8 @@ export default function RippleInteractive({
 
   return (
     <Canvas
-      ref={canvasRef}
+      onAnimation={onAnimation}
       onDropEnd={addRipple}
-      reSizeCallback={resizeFunction}
       style={{ background: color, transition: '3s' }}
     ></Canvas>
   );

@@ -1,22 +1,17 @@
 'use client';
-import { useRef, useState } from 'react';
-import Canvas from '../Canvas';
+import { useEffect, useRef, useState } from 'react';
 import { ThunderLinePoint } from './ThunderLinePoint';
 import { Thunder } from './Thunder';
+import useCanvas from '@/app/hooks/useCanvas';
 
 export default function ThunderCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { Canvas, width, height } = useCanvas(canvasRef);
+  const [lines, setLines] = useState<Thunder[]>([]);
   const [color] = useState('linear-gradient(225deg, #8f18ff9d, #000e4f7c)');
 
-  function resizeFunction(width: number, height: number) {
-    const canvas = canvasRef.current;
-    if (!canvas) return; // canvas가 null인지 확인
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return; // context가 null인지 확인
-    canvas.width = width;
-    canvas.height = height;
-
-    const lines = Array.from(Array(20)).map(() => {
+  useEffect(() => {
+    const newLines = Array.from(Array(20)).map(() => {
       const startPointX =
         Math.random() > 0.5 ? -10 : (Math.random() * width) / 2;
       let startPointY = 0;
@@ -77,34 +72,19 @@ export default function ThunderCanvas() {
         endPoint: endPoint!,
       });
     });
+    setLines(newLines);
+  }, [height, width]);
 
-    let requestAnimationId: number;
-    let timer = 0;
-
-    const onAnimation = () => {
-      timer++;
-      if (timer > 300) return;
-
-      // Canvas 초기화
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      lines.forEach((line) => line.draw(ctx));
-
-      requestAnimationId = window.requestAnimationFrame(onAnimation);
-    };
-
-    // 리퀘스트 애니메이션 초기화
-    requestAnimationId = window.requestAnimationFrame(onAnimation);
-    return () => {
-      // 기존 리퀘스트 애니메이션 캔슬
-      window.cancelAnimationFrame(requestAnimationId);
-    };
+  function onAnimation(ctx: CanvasRenderingContext2D) {
+    ctx.clearRect(0, 0, width, height);
+    lines.forEach((line) => line.draw(ctx));
   }
 
   return (
     <Canvas
       ref={canvasRef}
-      reSizeCallback={resizeFunction}
       style={{ background: color }}
+      onAnimation={onAnimation}
     ></Canvas>
   );
 }
