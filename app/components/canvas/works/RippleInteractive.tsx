@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import useCanvas, { CanvasEventProps } from '@/app/hooks/useCanvas';
-import BrightCircles from '../BrightCircle/BrightCircle';
-import Ripple from '../Ripple/Ripple';
+import BrightCircles from '../core/BrightCircle/BrightCircle';
+import Ripple from '../core/Ripple/Ripple';
 
 type RippleInteractiveProp = {
   color: string;

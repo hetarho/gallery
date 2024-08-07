@@ -1,10 +1,10 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { ThunderLinePoint } from './ThunderLinePoint';
-import { Thunder } from './Thunder';
 import useCanvas from '@/app/hooks/useCanvas';
+import { Thunder } from '../core/Thunder/Thunder';
+import { ThunderLinePoint } from '../core/Thunder/ThunderLinePoint';
 
-export default function ThunderCanvas() {
+export default function ThunderPreview() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { Canvas, width, height } = useCanvas(canvasRef);
   const [lines, setLines] = useState<Thunder[]>([]);
