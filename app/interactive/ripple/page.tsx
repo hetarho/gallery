@@ -2,10 +2,10 @@
 
 import { animate, AnimationPlaybackControls, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
-import DragAndDropProvider from '../provider/DragAndDripProvider';
 import DraggableCircle from './_DraggableCircle';
 import chroma from 'chroma-js';
-import RippleInteractive from '../components/canvas/works/RippleInteractive';
+import DragAndDropProvider from '@/app/provider/DragAndDripProvider';
+import RippleInteractive from '@/app/components/canvas/works/RippleInteractive';
 
 const COLORS = [
   '#4ad6b5',

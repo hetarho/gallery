@@ -14,14 +14,16 @@ export default function Home() {
         </header>
         <section className="flex justify-center px-10">
           <div className="grid w-full justify-items-center gap-12 sm:w-[80vw] sm:grid-cols-auto-fill-96">
-            <Link href={'/ripple'} className="w-full sm:w-96">
+            <Link href={'/interactive/ripple'} className="w-full sm:w-96">
               <ArtFrame title="Ripples">
                 <RippleInteractive color="#33a8de"></RippleInteractive>
               </ArtFrame>
             </Link>
-            <ArtFrame title="Thunder">
-              <ThunderPreview></ThunderPreview>
-            </ArtFrame>
+            <Link href={'/interactive/thunder'} className="w-full sm:w-96">
+              <ArtFrame title="Thunder">
+                <ThunderPreview></ThunderPreview>
+              </ArtFrame>
+            </Link>
           </div>
         </section>
       </main>

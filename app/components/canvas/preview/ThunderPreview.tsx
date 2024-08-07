@@ -81,10 +81,6 @@ export default function ThunderPreview() {
   }
 
   return (
-    <Canvas
-      ref={canvasRef}
-      style={{ background: color }}
-      onAnimation={onAnimation}
-    ></Canvas>
+    <Canvas style={{ background: color }} onAnimation={onAnimation}></Canvas>
   );
 }
