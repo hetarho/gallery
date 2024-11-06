@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={suit.className}>
-      <body className="w-full bg-black">{children}</body>
+      <body className="w-full bg-neutral-900">{children}</body>
     </html>
   );
 }
