@@ -8,11 +8,11 @@ import ThunderPreview from './components/canvas/preview/ThunderPreview';
 export default function Home() {
   return (
     <DragAndDropProvider>
-      <main>
+      <main className="flex flex-col items-center">
         <header className="select-none py-10 text-center text-4xl font-extrabold text-white">
           <TitleText />
         </header>
-        <section className="flex justify-center px-10">
+        <section className="flex max-w-screen-lg justify-center px-10">
           <div className="grid w-full justify-items-center gap-12 sm:w-[80vw] sm:grid-cols-auto-fill-96">
             <Link href={'/interactive/ripple'} className="w-full sm:w-96">
               <ArtFrame title="Ripples">

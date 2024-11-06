@@ -15,7 +15,7 @@ export default function ArtFrame({
             'linear-gradient(0deg, #000000A0, transparent,transparent)',
         }}
       ></div>
-      <div className="absolute bottom-4 left-4 select-none text-3xl font-thin text-white">
+      <div className="absolute bottom-4 left-4 select-none text-2xl font-normal text-white">
         {title}
       </div>
     </div>

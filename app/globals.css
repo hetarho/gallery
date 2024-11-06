@@ -16,18 +16,6 @@
   }
 }
 
-@font-face {
-  font-family: 'suit';
-  src: url('/fonts/SUIT-Variable.woff2') format('woff2');
-  font-weight: 100 900;
-  font-optical-sizing: 100 900;
-  font-display: swap;
-}
-
-main {
-  font-family: 'suit', sans-serif;
-}
-
 * {
   margin: 0;
   padding: 0;
