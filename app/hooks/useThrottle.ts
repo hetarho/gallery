@@ -1,10 +1,10 @@
-import { useRef } from "react";
+import { useRef } from 'react';
 
-import { useCallback } from "react";
+import { useCallback } from 'react';
 
 export function useThrottle<T extends unknown[]>(
   callback: (...args: T) => void,
-  delay: number
+  delay: number,
 ) {
   const lastRun = useRef(0);
 
@@ -19,6 +19,6 @@ export function useThrottle<T extends unknown[]>(
       lastRun.current = now;
       callback(...args);
     },
-    [callback, delay]
+    [callback, delay],
   );
 }

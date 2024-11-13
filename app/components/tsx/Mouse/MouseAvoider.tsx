@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useContext, useEffect, useRef, useState, useMemo } from "react";
-import { MouseContext } from "./provider";
+import { useContext, useEffect, useRef, useState, useMemo } from 'react';
+import { MouseContext } from './provider';
 import {
   distanceMouseFromRectCenter,
   getTriangleFuncFromRectAndMousePos,
-} from "./utils";
+} from './utils';
 
 export default function MouseAvoider({
   children,
@@ -37,7 +37,7 @@ export default function MouseAvoider({
 
     const { sin, cos } = getTriangleFuncFromRectAndMousePos(
       rect,
-      mousePosition
+      mousePosition,
     );
 
     const maxMoveLength = (200 * spring + 10) / (0 + 1 * spring);
@@ -65,7 +65,7 @@ export default function MouseAvoider({
       style={{
         ...style,
         transform,
-        transition: "transform 0.1s ease-in-out",
+        transition: 'transform 0.1s ease-in-out',
         zIndex: position.x === 0 && position.y === 0 ? 0 : 1,
       }}
     >

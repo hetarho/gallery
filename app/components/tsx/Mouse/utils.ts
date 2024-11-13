@@ -1,4 +1,4 @@
-import { Position } from "./type";
+import { Position } from './type';
 
 function getTriangleFuncFromRectAndMousePos(rect: DOMRect, mousePos: Position) {
   const rectCenterX = rect.left + rect.width / 2;

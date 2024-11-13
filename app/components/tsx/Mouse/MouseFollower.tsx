@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useContext, useEffect, useRef, useState } from "react";
-import { MouseFollowerProps } from "./type";
-import { MouseContext } from "./provider";
+import { useContext, useEffect, useRef, useState } from 'react';
+import { MouseFollowerProps } from './type';
+import { MouseContext } from './provider';
 import {
   distanceMouseFromRectCenter,
   getTriangleFuncFromRectAndMousePos,
-} from "./utils";
+} from './utils';
 
 export default function MouseFollower({
   children,
@@ -24,7 +24,7 @@ export default function MouseFollower({
 
     const { sin, cos } = getTriangleFuncFromRectAndMousePos(
       rect,
-      mousePosition
+      mousePosition,
     );
 
     const moveLength =
@@ -42,7 +42,7 @@ export default function MouseFollower({
       style={{
         transform: `translate(${position.x}px, ${position.y}px)`,
         transition:
-          "transform 0.1s ease-out, width 0.3s ease-out, height 0.3s ease-out",
+          'transform 0.1s ease-out, width 0.3s ease-out, height 0.3s ease-out',
       }}
     >
       {children}
