@@ -4,6 +4,8 @@ import DragAndDropProvider from './provider/DragAndDripProvider';
 import TitleText from './_TitleText';
 import RippleInteractive from './components/canvas/works/RippleInteractive';
 import ThunderPreview from './components/canvas/preview/ThunderPreview';
+import MonsterInteractive from './interactive/monster/page';
+import MouseProvider from './components/tsx/Mouse/provider';
 
 export default function Home() {
   return (
@@ -22,6 +24,11 @@ export default function Home() {
             <Link href={'/interactive/thunder'} className="w-full sm:w-96">
               <ArtFrame title="Thunder">
                 <ThunderPreview></ThunderPreview>
+              </ArtFrame>
+            </Link>
+            <Link href={'/interactive/monster'} className="w-full sm:w-96">
+              <ArtFrame title="Monster">
+                <MonsterInteractive></MonsterInteractive>
               </ArtFrame>
             </Link>
           </div>
