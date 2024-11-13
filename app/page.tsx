@@ -5,7 +5,6 @@ import TitleText from './_TitleText';
 import RippleInteractive from './components/canvas/works/RippleInteractive';
 import ThunderPreview from './components/canvas/preview/ThunderPreview';
 import MonsterInteractive from './interactive/monster/page';
-import MouseProvider from './components/tsx/Mouse/provider';
 
 export default function Home() {
   return (
