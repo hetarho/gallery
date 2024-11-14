@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import Monster from './_Monster';
 import clsx from 'clsx';
 import { Point } from '@/app/components/ts/types';
-import MouseForward from '@/app/components/tsx/MouseForward';
 import MouseFollower from '@/app/components/tsx/MouseFollower';
 
 export default function MonsterInteractive() {
@@ -33,13 +32,12 @@ export default function MonsterInteractive() {
   }, []);
 
   useEffect(() => {
-    console.log(lightPoint);
     setTimeout(() => {
       setLightPoint((prev) => ({
-        x: prev.x + Math.random() * 10 - 5,
-        y: prev.y + Math.random() * 10 - 5,
+        x: prev.x + Math.random() * 28 - 14,
+        y: prev.y + Math.random() * 28 - 14,
       }));
-    }, 100);
+    }, 75);
   }, [lightPoint]);
 
   return (

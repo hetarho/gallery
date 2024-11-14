@@ -11,7 +11,7 @@ export default function RotateByMouse({
   transition?: string;
   point?: Point;
 }) {
-  const { mousePosition: mousePosition } = useContext(MouseContext);
+  const { mousePosition, isMouseOver } = useContext(MouseContext);
   const ref = useRef<HTMLDivElement>(null);
   const [target, setTarget] = useState<AnimationTarget>();
   useEffect(() => {
@@ -22,8 +22,10 @@ export default function RotateByMouse({
   }, []);
 
   useEffect(() => {
-    target?.rotate({ point: point ?? mousePosition });
-  }, [mousePosition, point, target]);
+    target?.rotate({
+      point: isMouseOver ? mousePosition : (point ?? mousePosition),
+    });
+  }, [mousePosition, point, target, isMouseOver]);
 
   return (
     <div ref={ref} style={{ ...target?.style, transition }}>

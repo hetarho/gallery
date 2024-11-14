@@ -15,7 +15,7 @@ export default function MouseForward({
   point?: Point;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const { mousePosition: mousePosition } = useContext(MouseContext);
+  const { mousePosition, isMouseOver } = useContext(MouseContext);
   const [target, setTarget] = useState<AnimationTarget>();
   useEffect(() => {
     if (!ref.current) return;
@@ -25,8 +25,11 @@ export default function MouseForward({
   }, []);
 
   useEffect(() => {
-    target?.forward({ point: point ?? mousePosition, force });
-  }, [force, mousePosition, point, target]);
+    target?.forward({
+      point: isMouseOver ? mousePosition : (point ?? mousePosition),
+      force,
+    });
+  }, [force, mousePosition, point, target, isMouseOver]);
 
   return (
     <div ref={ref} style={{ ...target?.style, transition }}>

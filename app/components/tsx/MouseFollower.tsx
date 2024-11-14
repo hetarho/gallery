@@ -14,7 +14,7 @@ export default function MouseFollower({
   point?: Point;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const { mousePosition: mousePosition } = useContext(MouseContext);
+  const { mousePosition, isMouseOver } = useContext(MouseContext);
   const [target, setTarget] = useState<AnimationTarget>();
   useEffect(() => {
     if (!ref.current) return;
@@ -24,8 +24,10 @@ export default function MouseFollower({
   }, []);
 
   useEffect(() => {
-    target?.follow({ point: point ?? mousePosition });
-  }, [mousePosition, point, target]);
+    target?.follow({
+      point: isMouseOver ? mousePosition : (point ?? mousePosition),
+    });
+  }, [mousePosition, point, target, isMouseOver]);
 
   return (
     <div ref={ref} style={{ ...target?.style, transition }}>
