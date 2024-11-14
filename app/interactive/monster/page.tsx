@@ -29,6 +29,17 @@ export default function MonsterInteractive() {
 
       setLightPoint({ x: maxX / 2, y: maxY / 2 });
     }
+
+    // 화면이 로드될 때와 리사이징될 때 높이 값을 업데이트합니다.
+    if (typeof window === 'undefined') return;
+    function updateVh() {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+
+    // 초기 실행 및 resize 이벤트 등록
+    updateVh();
+    window.addEventListener('resize', updateVh);
   }, []);
 
   useEffect(() => {
@@ -42,7 +53,7 @@ export default function MonsterInteractive() {
 
   return (
     <div
-      className="h-screen w-screen overflow-hidden"
+      className="h-screen-dynamic w-screen overflow-hidden"
       style={{ backgroundColor: isDarkMode ? 'black' : 'white' }}
     >
       <div className="absolute right-0 top-0">
