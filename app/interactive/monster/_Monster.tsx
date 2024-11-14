@@ -1,5 +1,5 @@
-import MouseAvoider from '@/app/components/tsx/Mouse/MouseAvoider';
-import MouseFollower from '@/app/components/tsx/Mouse/MouseFollower';
+import MouseAvoider from '@/app/components/tsx/MouseAvoider';
+import MouseFollower from '@/app/components/tsx/MouseFollower';
 import clsx from 'clsx';
 import { useMemo } from 'react';
 
@@ -20,8 +20,8 @@ export default function Monster({
     );
   }, [isDarkMode]);
 
-  return (
-    <MouseAvoider spring={10}>
+  const monster = useMemo(() => {
+    return (
       <div className="flex h-36 w-36 items-center justify-center rounded-full">
         <div
           className={`flex h-48 w-48 flex-col items-center justify-center gap-3 rounded-full`}
@@ -29,18 +29,32 @@ export default function Monster({
             background: `radial-gradient(circle at center, ${color} 0%, transparent 60%)`,
           }}
         >
-          <MouseFollower>
+          <MouseFollower force={1.6}>
             <div className="flex gap-2">
               <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-white">
-                <MouseFollower spring={1.1}>{eyeBlack}</MouseFollower>
+                <MouseFollower force={2.8}>{eyeBlack}</MouseFollower>
               </div>
               <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-white">
-                <MouseFollower spring={1.1}>{eyeBlack}</MouseFollower>
+                <MouseFollower force={2.8}>{eyeBlack}</MouseFollower>
               </div>
             </div>
           </MouseFollower>
         </div>
       </div>
-    </MouseAvoider>
-  );
+    );
+  }, [color]);
+
+  const monsterWhenLight = useMemo(() => {
+    return (
+      <MouseAvoider force={1.7} transition="all 0.1s ease-in-out">
+        {monster}
+      </MouseAvoider>
+    );
+  }, [color]);
+
+  const monsterWhenDark = useMemo(() => {
+    return <MouseFollower force={1.1}>{monster}</MouseFollower>;
+  }, [color]);
+
+  return isDarkMode ? monsterWhenDark : monsterWhenLight;
 }

@@ -10,7 +10,7 @@ export default function MonsterInteractive() {
   const [colors, setColors] = useState<string[]>([]);
 
   const row = 13;
-  const col = 7;
+  const col = 13;
 
   useEffect(() => {
     setColors(
