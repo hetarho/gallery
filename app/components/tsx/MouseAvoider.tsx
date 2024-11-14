@@ -1,14 +1,17 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { MouseContext } from '../ts/provider';
 import AnimationTarget from '../ts';
+import { Point } from '../ts/types';
 
 export default function MouseAvoider({
   children,
   transition,
+  point,
   force = 1,
 }: {
   children: React.ReactNode;
   transition?: string;
+  point?: Point;
   force?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -22,8 +25,8 @@ export default function MouseAvoider({
   }, []);
 
   useEffect(() => {
-    target?.avoid({ point: mousePosition, force });
-  }, [force, mousePosition, target]);
+    target?.avoid({ point: point ?? mousePosition, force });
+  }, [force, mousePosition, point, target]);
 
   return (
     <div ref={ref} style={{ ...target?.style, transition }}>

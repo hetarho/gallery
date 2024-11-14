@@ -1,15 +1,17 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { MouseContext } from '../ts/provider';
 import AnimationTarget from '../ts';
+import { Point } from '../ts/types';
 
 export default function MouseFollower({
   children,
   transition,
-  force = 1,
+  point,
 }: {
   children: React.ReactNode;
   transition?: string;
   force?: number;
+  point?: Point;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const { mousePosition: mousePosition } = useContext(MouseContext);
@@ -22,8 +24,8 @@ export default function MouseFollower({
   }, []);
 
   useEffect(() => {
-    target?.forward({ point: mousePosition, force });
-  }, [force, mousePosition, target]);
+    target?.follow({ point: point ?? mousePosition });
+  }, [mousePosition, point, target]);
 
   return (
     <div ref={ref} style={{ ...target?.style, transition }}>

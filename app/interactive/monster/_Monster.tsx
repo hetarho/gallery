@@ -1,14 +1,17 @@
+import { Point } from '@/app/components/ts/types';
 import MouseAvoider from '@/app/components/tsx/MouseAvoider';
-import MouseFollower from '@/app/components/tsx/MouseFollower';
+import MouseForward from '@/app/components/tsx/MouseForward';
 import clsx from 'clsx';
 import { useMemo } from 'react';
 
 export default function Monster({
   color,
   isDarkMode,
+  point,
 }: {
   color: string;
   isDarkMode: boolean;
+  point?: Point;
 }) {
   const eyeBlack = useMemo(() => {
     return (
@@ -22,39 +25,59 @@ export default function Monster({
 
   const monster = useMemo(() => {
     return (
-      <div className="flex h-36 w-36 items-center justify-center rounded-full">
+      <div className="flex h-28 w-28 items-center justify-center rounded-full">
         <div
-          className={`flex h-48 w-48 flex-col items-center justify-center gap-3 rounded-full`}
+          className={`flex h-40 w-40 flex-col items-center justify-center gap-3 rounded-full`}
           style={{
             background: `radial-gradient(circle at center, ${color} 0%, transparent 60%)`,
           }}
         >
-          <MouseFollower force={1.6}>
+          <MouseForward
+            force={1.6}
+            point={point}
+            transition="all 0.1s ease-in-out"
+          >
             <div className="flex gap-2">
               <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-white">
-                <MouseFollower force={2.8}>{eyeBlack}</MouseFollower>
+                <MouseForward
+                  force={2.8}
+                  point={point}
+                  transition="all 0.1s ease-in-out"
+                >
+                  {eyeBlack}
+                </MouseForward>
               </div>
               <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-white">
-                <MouseFollower force={2.8}>{eyeBlack}</MouseFollower>
+                <MouseForward
+                  force={2.8}
+                  point={point}
+                  transition="all 0.1s ease-in-out"
+                >
+                  {eyeBlack}
+                </MouseForward>
               </div>
             </div>
-          </MouseFollower>
+          </MouseForward>
         </div>
       </div>
     );
-  }, [color]);
+  }, [color, point]);
 
   const monsterWhenLight = useMemo(() => {
     return (
-      <MouseAvoider force={1.7} transition="all 0.1s ease-in-out">
+      <MouseAvoider force={1.7} transition="all 0.1s ease-in-out" point={point}>
         {monster}
       </MouseAvoider>
     );
-  }, [color]);
+  }, [color, point]);
 
   const monsterWhenDark = useMemo(() => {
-    return <MouseFollower force={1.1}>{monster}</MouseFollower>;
-  }, [color]);
+    return (
+      <MouseForward force={1.1} point={point}>
+        {monster}
+      </MouseForward>
+    );
+  }, [color, point]);
 
   return isDarkMode ? monsterWhenDark : monsterWhenLight;
 }
