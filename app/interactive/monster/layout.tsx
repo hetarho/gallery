@@ -1,4 +1,4 @@
-import MouseProvider from '@/app/components/ts/provider';
+import MouseProvider from '@/app/components/ts/MouseProvider';
 
 export default function MonsterLayout({
   children,

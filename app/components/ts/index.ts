@@ -1,45 +1,41 @@
-import { CSSProperties } from 'react';
 import { Point, Size } from './types';
-import {
-  getDistance,
-  getRectCenter,
-  getRectSize,
-  getTriangleFunc,
-} from './utils';
+import { getDistance, getRectSize, getTriangleFunc } from './utils';
+import { getRectCenter } from './utils';
 
 class AnimationTarget {
   private point: Point;
   private size: Size;
-  style: CSSProperties;
+
+  private transform: {
+    translateX: string;
+    translateY: string;
+    rotate: string;
+    scaleX: string;
+    scaleY: string;
+  };
 
   constructor(rect: DOMRect) {
     this.point = getRectCenter(rect);
     this.size = getRectSize(rect);
-    this.style = {};
+    this.transform = {
+      translateX: '0',
+      translateY: '0',
+      rotate: '0',
+      scaleX: '1',
+      scaleY: '1',
+    };
+  }
+
+  getTransform() {
+    return `translate(${this.transform.translateX}, ${this.transform.translateY}) rotate(${this.transform.rotate}) scaleX(${this.transform.scaleX}) scaleY(${this.transform.scaleY})`;
   }
 
   follow({ point }: { point: Point }) {
     const newPosX = point.x - this.point.x;
     const newPosY = point.y - this.point.y;
 
-    this.style = {
-      transform: `translate(${newPosX}px, ${newPosY}px)`,
-    };
-  }
-
-  forward({ point, force }: { point: Point; force: number }) {
-    const { sin, cos } = getTriangleFunc(this.point, point);
-
-    const distance = Math.max(getDistance(this.point, point), 1);
-
-    const logForce = Math.log(distance) / Math.log(force);
-
-    const newPosX = logForce * cos;
-    const newPosY = logForce * sin;
-
-    this.style = {
-      transform: `translate(${newPosX}px, ${newPosY}px)`,
-    };
+    this.transform.translateX = `${newPosX}px`;
+    this.transform.translateY = `${newPosY}px`;
   }
 
   avoid({ point, force }: { point: Point; force: number }) {
@@ -57,17 +53,44 @@ class AnimationTarget {
     const newPosX = -logForce * cos;
     const newPosY = -logForce * sin;
 
-    this.style = {
-      transform: `translate(${newPosX}px, ${newPosY}px)`,
-    };
+    this.transform.translateX = `${newPosX}px`;
+    this.transform.translateY = `${newPosY}px`;
+  }
+
+  forward({ point, force }: { point: Point; force: number }) {
+    const { sin, cos } = getTriangleFunc(this.point, point);
+
+    const distance = Math.max(getDistance(this.point, point), 1);
+
+    const logForce = Math.log(distance) / Math.log(force);
+
+    const newPosX = logForce * cos;
+    const newPosY = logForce * sin;
+
+    this.transform.translateX = `${newPosX}px`;
+    this.transform.translateY = `${newPosY}px`;
+  }
+
+  moveUp({ point, force }: { point: Point; force: number }) {
+    const distance = getDistance(this.point, point);
+    const logForce = Math.log(distance) / Math.log(force);
+    const newPosY = logForce;
+
+    this.transform.translateY = `${newPosY}px`;
+  }
+
+  moveDown({ point, force }: { point: Point; force: number }) {
+    const distance = getDistance(this.point, point);
+    const logForce = Math.log(distance) / Math.log(force);
+    const newPosY = -logForce;
+
+    this.transform.translateY = `${newPosY}px`;
   }
 
   rotate({ point }: { point: Point }) {
     const { degree } = getTriangleFunc(point, this.point);
 
-    this.style = {
-      transform: `rotate(${degree}deg)`,
-    };
+    this.transform.rotate = `${degree}deg`;
   }
 
   scaleByPoint({ point, force }: { point: Point; force: number }) {
@@ -76,9 +99,8 @@ class AnimationTarget {
     const sizeAvg = Math.sqrt(this.size.width * this.size.height) ** force;
     const scale = sizeAvg / (sizeAvg + logForce);
 
-    this.style = {
-      transform: `scale(${scale})`,
-    };
+    this.transform.scaleX = `${scale}`;
+    this.transform.scaleY = `${scale}`;
   }
 
   scaleXByPoint({ point, force }: { point: Point; force: number }) {
@@ -87,9 +109,7 @@ class AnimationTarget {
     const sizeAvg = Math.sqrt(this.size.width * this.size.height) ** force;
     const scale = sizeAvg / (sizeAvg + logForce);
 
-    this.style = {
-      transform: `scaleX(${scale})`,
-    };
+    this.transform.scaleX = `${scale}`;
   }
 
   scaleYByPoint({ point, force }: { point: Point; force: number }) {
@@ -98,9 +118,7 @@ class AnimationTarget {
     const sizeAvg = Math.sqrt(this.size.width * this.size.height) ** force;
     const scale = sizeAvg / (sizeAvg + logForce);
 
-    this.style = {
-      transform: `scaleY(${scale})`,
-    };
+    this.transform.scaleY = `${scale}`;
   }
 }
 

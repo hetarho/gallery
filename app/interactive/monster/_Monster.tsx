@@ -1,4 +1,4 @@
-import { Point } from '@/app/components/ts/types';
+import InView from '@/app/components/tsx/InView';
 import MouseAvoider from '@/app/components/tsx/MouseAvoider';
 import MouseForward from '@/app/components/tsx/MouseForward';
 import clsx from 'clsx';
@@ -7,11 +7,9 @@ import { useMemo } from 'react';
 export default function Monster({
   color,
   isDarkMode,
-  point,
 }: {
   color: string;
   isDarkMode: boolean;
-  point?: Point;
 }) {
   const eyeBlack = useMemo(() => {
     return (
@@ -32,52 +30,28 @@ export default function Monster({
             background: `radial-gradient(circle at center, ${color} 0%, transparent 60%)`,
           }}
         >
-          <MouseForward
-            force={1.6}
-            point={point}
-            transition="all 0.1s ease-in-out"
-          >
+          <MouseForward force={1.6}>
             <div className="flex gap-2">
               <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-white">
-                <MouseForward
-                  force={2.8}
-                  point={point}
-                  transition="all 0.1s ease-in-out"
-                >
-                  {eyeBlack}
-                </MouseForward>
+                <MouseForward force={2.8}>{eyeBlack}</MouseForward>
               </div>
               <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-white">
-                <MouseForward
-                  force={2.8}
-                  point={point}
-                  transition="all 0.1s ease-in-out"
-                >
-                  {eyeBlack}
-                </MouseForward>
+                <MouseForward force={2.8}>{eyeBlack}</MouseForward>
               </div>
             </div>
           </MouseForward>
         </div>
       </div>
     );
-  }, [color, point]);
+  }, [color]);
 
   const monsterWhenLight = useMemo(() => {
-    return (
-      <MouseAvoider force={1.7} transition="all 0.1s ease-in-out" point={point}>
-        {monster}
-      </MouseAvoider>
-    );
-  }, [color, point]);
+    return <MouseAvoider force={1.7}>{monster}</MouseAvoider>;
+  }, [color]);
 
   const monsterWhenDark = useMemo(() => {
-    return (
-      <MouseForward force={1.1} point={point}>
-        {monster}
-      </MouseForward>
-    );
-  }, [color, point]);
+    return <MouseForward force={1.15}>{monster}</MouseForward>;
+  }, [color]);
 
-  return isDarkMode ? monsterWhenDark : monsterWhenLight;
+  return <InView>{isDarkMode ? monsterWhenDark : monsterWhenLight}</InView>;
 }

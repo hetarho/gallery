@@ -1,22 +1,20 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { MouseContext } from '../ts/provider';
 import AnimationTarget from '../ts';
-import { Point } from '../ts/types';
+import { MouseContext } from '../ts/MouseProvider';
 
 export default function MouseForward({
   children,
-  transition,
-  force = 1,
-  point,
+  force = 1.5,
 }: {
   children: React.ReactNode;
-  transition?: string;
   force?: number;
-  point?: Point;
 }) {
+  const { mousePosition } = useContext(MouseContext);
   const ref = useRef<HTMLDivElement>(null);
-  const { mousePosition, isMouseOver } = useContext(MouseContext);
   const [target, setTarget] = useState<AnimationTarget>();
+
+  const [transform, setTransform] = useState('');
+
   useEffect(() => {
     if (!ref.current) return;
 
@@ -25,14 +23,12 @@ export default function MouseForward({
   }, []);
 
   useEffect(() => {
-    target?.forward({
-      point: isMouseOver ? mousePosition : (point ?? mousePosition),
-      force,
-    });
-  }, [force, mousePosition, point, target, isMouseOver]);
+    target?.forward({ point: mousePosition, force });
+    setTransform(target?.getTransform() ?? '');
+  }, [mousePosition, target, force]);
 
   return (
-    <div ref={ref} style={{ ...target?.style, transition }}>
+    <div ref={ref} style={{ transform, transition: 'all 0.1s ease-in-out' }}>
       {children}
     </div>
   );
