@@ -10,7 +10,7 @@ import MiningInteractive from './interactive/mining/page';
 export default function Home() {
   return (
     <DragAndDropProvider>
-      <main className="flex w-full flex-col items-center">
+      <main className="mb-40 flex w-full flex-col items-center">
         <header className="select-none py-10 text-center text-4xl font-extrabold text-white">
           <TitleText />
         </header>
@@ -33,7 +33,7 @@ export default function Home() {
             </Link>
             <Link href={'/interactive/mining'} className="w-full sm:w-96">
               <ArtFrame title="Mining">
-                <MiningInteractive></MiningInteractive>
+                <MiningInteractive isPreview></MiningInteractive>
               </ArtFrame>
             </Link>
           </div>
