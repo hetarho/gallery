@@ -33,7 +33,7 @@ export default function Home() {
             </Link>
             <Link href={'/interactive/mining'} className="w-full sm:w-96">
               <ArtFrame title="Mining">
-                <MiningInteractive isPreview></MiningInteractive>
+                <MiningInteractive></MiningInteractive>
               </ArtFrame>
             </Link>
           </div>

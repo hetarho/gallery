@@ -59,13 +59,14 @@ const Mineral = ({ color, size, destroyCallback }: MineralProps) => {
               }}
             >
               <MineralPart
-                key={col}
+                key={`mineral-${col}-${row}`}
                 color={colors[(row + col * 13) % 10]}
                 isDestroyed={destroyInfo.some(
                   (info) => info.x === col && info.y === row,
                 )}
               />
               <MineralPartPop
+                key={`pop-${col}-${row}`}
                 color={colors[(row + col * 13) % 10]}
                 isDestroyed={destroyInfo.some(
                   (info) => info.x === col && info.y === row,

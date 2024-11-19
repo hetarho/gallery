@@ -3,13 +3,8 @@
 import chroma from 'chroma-js';
 import { useCallback, useEffect, useState } from 'react';
 import Mineral from './_Mineral';
-import clsx from 'clsx';
 
-export default function MiningInteractive({
-  isPreview = false,
-}: {
-  isPreview?: boolean;
-}) {
+export default function MiningInteractive() {
   const [color, setColor] = useState('#4ad6b5');
   const [size, setSize] = useState(1);
 
@@ -24,15 +19,7 @@ export default function MiningInteractive({
   }, [color]);
 
   return (
-    <div
-      className={clsx(
-        'flex items-center justify-center overflow-hidden bg-black',
-        {
-          'h-full w-full': isPreview,
-          'h-screen w-screen': !isPreview,
-        },
-      )}
-    >
+    <div className="flex h-screen w-screen items-center justify-center overflow-hidden bg-black">
       <Mineral color={color} size={size} destroyCallback={destroyCallback} />
     </div>
   );
