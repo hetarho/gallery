@@ -109,7 +109,11 @@ const MineralPartPop = ({
         count={15}
         delay={0}
         pops={[
-          <div className="z-20 h-2 w-2" style={{ backgroundColor: color }} />,
+          <div
+            key="pop"
+            className="z-20 h-2 w-2"
+            style={{ backgroundColor: color }}
+          />,
         ]}
       />
     </div>
