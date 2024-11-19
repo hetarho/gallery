@@ -5,6 +5,7 @@ import TitleText from './_TitleText';
 import RippleInteractive from './components/canvas/works/RippleInteractive';
 import ThunderPreview from './components/canvas/preview/ThunderPreview';
 import MonsterInteractive from './interactive/monster/page';
+import MiningInteractive from './interactive/mining/page';
 
 export default function Home() {
   return (
@@ -13,7 +14,7 @@ export default function Home() {
         <header className="select-none py-10 text-center text-4xl font-extrabold text-white">
           <TitleText />
         </header>
-        <section className="flex w-full max-w-screen-lg justify-center px-10">
+        <section className="flex w-full max-w-screen-lg justify-center sm:px-10">
           <div className="grid w-full justify-items-center gap-12 sm:w-[80vw] sm:grid-cols-auto-fill-96">
             <Link href={'/interactive/ripple'} className="w-full sm:w-96">
               <ArtFrame title="Ripples">
@@ -28,6 +29,11 @@ export default function Home() {
             <Link href={'/interactive/monster'} className="w-full sm:w-96">
               <ArtFrame title="Monster">
                 <MonsterInteractive></MonsterInteractive>
+              </ArtFrame>
+            </Link>
+            <Link href={'/interactive/mining'} className="w-full sm:w-96">
+              <ArtFrame title="Mining">
+                <MiningInteractive></MiningInteractive>
               </ArtFrame>
             </Link>
           </div>

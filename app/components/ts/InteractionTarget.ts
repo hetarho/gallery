@@ -2,7 +2,7 @@ import { Point, Size } from './types';
 import { getDistance, getRectSize, getTriangleFunc } from './utils';
 import { getRectCenter } from './utils';
 
-class AnimationTarget {
+class InteractionTarget {
   private point: Point;
   private size: Size;
 
@@ -38,7 +38,7 @@ class AnimationTarget {
     this.transform.translateY = `${newPosY}px`;
   }
 
-  avoid({ point, force }: { point: Point; force: number }) {
+  avoid({ point, force = Math.E }: { point: Point; force: number }) {
     const { sin, cos } = getTriangleFunc(this.point, point);
 
     const sizeAvg = Math.sqrt(this.size.width * this.size.height) ** force;
@@ -57,7 +57,7 @@ class AnimationTarget {
     this.transform.translateY = `${newPosY}px`;
   }
 
-  forward({ point, force }: { point: Point; force: number }) {
+  forward({ point, force = Math.E }: { point: Point; force: number }) {
     const { sin, cos } = getTriangleFunc(this.point, point);
 
     const distance = Math.max(getDistance(this.point, point), 1);
@@ -71,29 +71,25 @@ class AnimationTarget {
     this.transform.translateY = `${newPosY}px`;
   }
 
-  moveUp({ point, force }: { point: Point; force: number }) {
-    const distance = getDistance(this.point, point);
-    const logForce = Math.log(distance) / Math.log(force);
-    const newPosY = logForce;
-
-    this.transform.translateY = `${newPosY}px`;
+  moveVertical({ distance }: { distance: number }) {
+    this.transform.translateY = `${-distance}px`;
   }
 
-  moveDown({ point, force }: { point: Point; force: number }) {
-    const distance = getDistance(this.point, point);
-    const logForce = Math.log(distance) / Math.log(force);
-    const newPosY = -logForce;
-
-    this.transform.translateY = `${newPosY}px`;
+  moveHorizontal({ distance }: { distance: number }) {
+    this.transform.translateX = `${-distance}px`;
   }
 
-  rotate({ point }: { point: Point }) {
+  rotate({ degree }: { degree: number }) {
+    this.transform.rotate = `${degree}deg`;
+  }
+
+  rotateToPoint({ point }: { point: Point }) {
     const { degree } = getTriangleFunc(point, this.point);
 
     this.transform.rotate = `${degree}deg`;
   }
 
-  scaleByPoint({ point, force }: { point: Point; force: number }) {
+  scaleByPoint({ point, force = Math.E }: { point: Point; force: number }) {
     const distance = getDistance(this.point, point);
     const logForce = Math.log(distance) / Math.log(force);
     const sizeAvg = Math.sqrt(this.size.width * this.size.height) ** force;
@@ -122,4 +118,4 @@ class AnimationTarget {
   }
 }
 
-export default AnimationTarget;
+export default InteractionTarget;

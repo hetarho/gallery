@@ -2,7 +2,7 @@
 
 import { useThrottle } from '@/app/hooks/useThrottle';
 import { createContext, useState } from 'react';
-import { Point } from './types';
+import { Point } from '../ts/types';
 
 export const MouseContext = createContext<MouseContextType>({
   mousePosition: { x: 0, y: 0 },

@@ -1,6 +1,6 @@
-import InView from '@/app/components/tsx/InView';
-import MouseAvoider from '@/app/components/tsx/MouseAvoider';
-import MouseForward from '@/app/components/tsx/MouseForward';
+import InView from '@/app/components/react/InView';
+import MouseAvoider from '@/app/components/react/MouseAvoider';
+import MouseForward from '@/app/components/react/MouseForward';
 import clsx from 'clsx';
 import { useMemo } from 'react';
 
