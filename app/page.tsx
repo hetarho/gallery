@@ -1,8 +1,8 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex h-screen flex-col items-center justify-center">
       <Link href="/note" className="text-4xl font-bold text-white">
         Note
       </Link>
