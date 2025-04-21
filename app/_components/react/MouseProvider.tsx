@@ -1,6 +1,6 @@
 'use client';
 
-import { useThrottle } from '@/app/hooks/useThrottle';
+import { useThrottle } from '@/app/_hooks/useThrottle';
 import { createContext, useState } from 'react';
 import { Point } from '../ts/types';
 

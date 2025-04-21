@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import ArtFrame from '../_ArtFrame';
-import DragAndDropProvider from '../provider/DragAndDripProvider';
-import TitleText from '../_TitleText';
-import RippleInteractive from '../components/canvas/works/RippleInteractive';
-import ThunderPreview from '../components/canvas/preview/ThunderPreview';
-import MonsterInteractive from '../interactive/monster/page';
-import MiningInteractive from '../interactive/mining/page';
+import ArtFrame from './components/ArtFrame';
+import DragAndDropProvider from '../_provider/DragAndDripProvider';
+import TitleText from './components/TitleText';
+import RippleInteractive from '../_components/canvas/works/RippleInteractive';
+import ThunderPreview from '../_components/canvas/preview/ThunderPreview';
+import MonsterInteractive from './interactive/monster/page';
+import MiningInteractive from './interactive/mining/page';
 
 export default function Home() {
   return (

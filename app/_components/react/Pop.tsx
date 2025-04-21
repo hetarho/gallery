@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useState } from 'react';
 import InteractionTarget from '../ts/InteractionTarget';
-import useInView from '@/app/hooks/useInView';
+import useInView from '@/app/_hooks/useInView';
 import { PointWithGravity } from '../ts/types';
 
 function Pop({

@@ -1,4 +1,4 @@
-import { Pops } from '@/app/components/react/Pop';
+import { Pops } from '@/app/_components/react/Pop';
 import chroma from 'chroma-js';
 import { useEffect } from 'react';
 

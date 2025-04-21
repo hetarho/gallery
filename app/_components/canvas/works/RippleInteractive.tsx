@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import useCanvas, { CanvasEventProps } from '@/app/hooks/useCanvas';
+import useCanvas, { CanvasEventProps } from '@/app/_hooks/useCanvas';
 import BrightCircles from '../core/BrightCircle/BrightCircle';
 import Ripple from '../core/Ripple/Ripple';
 

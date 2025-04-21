@@ -1,6 +1,6 @@
 'use client';
 
-import useInView from '@/app/hooks/useInView';
+import useInView from '@/app/_hooks/useInView';
 import { useEffect, useState } from 'react';
 
 export default function InView({

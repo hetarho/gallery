@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import useCanvas from '@/app/hooks/useCanvas';
+import useCanvas from '@/app/_hooks/useCanvas';
 import { Thunder } from '../core/Thunder/Thunder';
 import { ThunderLinePoint } from '../core/Thunder/ThunderLinePoint';
 
