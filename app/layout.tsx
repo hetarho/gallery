@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 const suit = localFont({
-  src: './fonts/SUIT-Variable.woff2',
+  src: './_fonts/SUIT-Variable.woff2',
   variable: '--font-suit',
   display: 'swap',
   weight: '100 900',
@@ -23,7 +23,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={suit.className}>
-      <body className="w-full bg-neutral-900">{children}</body>
+      <body className="w-full bg-neutral-900">
+        {children}
+        <footer className="flex justify-center gap-4 text-white">
+          <a href={`${process.env.NEXT_PUBLIC_MAIN_URL}`} target="_self">
+            Home
+          </a>
+          <a href={`${process.env.NEXT_PUBLIC_NOTE_URL}`} target="_self">
+            Note
+          </a>
+          <a href={`${process.env.NEXT_PUBLIC_GALLERY_URL}`} target="_self">
+            Gallery
+          </a>
+          <a href={`${process.env.NEXT_PUBLIC_PROFILE_URL}`} target="_self">
+            Profile
+          </a>
+        </footer>
+      </body>
     </html>
   );
 }

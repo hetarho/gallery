@@ -31,7 +31,7 @@ export interface CanvasEventProps {
   data?: object;
 }
 
-export default function useCanvas(ref: RefObject<HTMLCanvasElement>) {
+export default function useCanvas(ref: RefObject<HTMLCanvasElement | null>) {
   const [canvasRef] = useState(ref);
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);

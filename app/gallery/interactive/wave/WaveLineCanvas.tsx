@@ -3,8 +3,8 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
 
 export default function WaveLineCanvas({ colors }: { colors: string[] }) {
-  const divRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
-  const canvasRef: RefObject<HTMLCanvasElement> =
+  const divRef: RefObject<HTMLDivElement | null> = useRef<HTMLDivElement>(null);
+  const canvasRef: RefObject<HTMLCanvasElement | null> =
     useRef<HTMLCanvasElement>(null);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
   const [width, setWidth] = useState(0);
