@@ -5,8 +5,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 export default function AnimatedLayout({
   children,
+  className,
 }: {
   children: React.ReactNode;
+  className?: string;
 }) {
   const pathname = usePathname();
 
@@ -18,6 +20,7 @@ export default function AnimatedLayout({
         animate="visible"
         exit="hidden"
         variants={pageVariants}
+        className={className}
       >
         {children}
       </motion.div>

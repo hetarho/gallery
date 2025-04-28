@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
-import './globals.css';
+import './_styles/globals.css';
+import { ThemeProvider } from 'next-themes';
 
 export const metadata: Metadata = {
   title: 'HaeRam',
@@ -22,23 +23,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={suit.className}>
-      <body className="w-full bg-neutral-900">
-        {children}
-        <footer className="flex justify-center gap-4 text-white">
-          <a href={`${process.env.NEXT_PUBLIC_MAIN_URL}`} target="_self">
-            Home
-          </a>
-          <a href={`${process.env.NEXT_PUBLIC_NOTE_URL}`} target="_self">
-            Note
-          </a>
-          <a href={`${process.env.NEXT_PUBLIC_GALLERY_URL}`} target="_self">
-            Gallery
-          </a>
-          <a href={`${process.env.NEXT_PUBLIC_PROFILE_URL}`} target="_self">
-            Profile
-          </a>
-        </footer>
+    <html lang="en" className={suit.className} suppressHydrationWarning>
+      <body className="bg-mono-100 w-full transition-colors duration-300">
+        <ThemeProvider attribute="class">
+          {children}
+          <footer className="flex justify-center gap-4 text-white">
+            <a href={`${process.env.NEXT_PUBLIC_MAIN_URL}`} target="_self">
+              Home
+            </a>
+            <a href={`${process.env.NEXT_PUBLIC_NOTE_URL}`} target="_self">
+              Note
+            </a>
+            <a href={`${process.env.NEXT_PUBLIC_GALLERY_URL}`} target="_self">
+              Gallery
+            </a>
+            <a href={`${process.env.NEXT_PUBLIC_PROFILE_URL}`} target="_self">
+              Profile
+            </a>
+          </footer>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -248,16 +248,3 @@ export const pageVariants: Variants = {
     },
   },
 };
-
-// ============ 접근성 ============
-
-// prefers-reduced-motion 사용자를 위한 최소 애니메이션
-export const reducedMotion: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      duration: 0.1,
-    },
-  },
-};

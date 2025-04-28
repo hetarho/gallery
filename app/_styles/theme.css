@@ -1,0 +1,25 @@
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-mono-100: #f8f9fa;
+  --color-mono-200: #e9ecef;
+  --color-mono-300: #dee2e6;
+  --color-mono-400: #ced4da;
+  --color-mono-500: #adb5bd;
+  --color-mono-600: #868e96;
+  --color-mono-700: #495057;
+  --color-mono-800: #343a40;
+  --color-mono-900: #212529;
+}
+
+.dark {
+  --color-mono-100: #212529;
+  --color-mono-200: #343a40;
+  --color-mono-300: #495057;
+  --color-mono-400: #868e96;
+  --color-mono-500: #adb5bd;
+  --color-mono-600: #ced4da;
+  --color-mono-700: #dee2e6;
+  --color-mono-800: #e9ecef;
+  --color-mono-900: #f8f9fa;
+}

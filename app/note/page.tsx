@@ -1,20 +1,12 @@
-import Link from 'next/link';
 import AnimatedLayout from '../_components/animation/AnimatedLayout';
+import NoteCard from './_components/NoteCard';
 
 export default function Note() {
   return (
-    <AnimatedLayout>
-      <div className="flex h-screen flex-col items-center justify-center">
-        {Array.from({ length: 10 }).map((_, index) => (
-          <Link
-            key={index}
-            href={`/note/detail/${index}`}
-            className="text-4xl font-bold text-white"
-          >
-            {index}
-          </Link>
-        ))}
-      </div>
+    <AnimatedLayout className="flex flex-wrap justify-center gap-10">
+      {Array.from({ length: 10 }).map((_, index) => (
+        <NoteCard key={index} index={index} />
+      ))}
     </AnimatedLayout>
   );
 }
