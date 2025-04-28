@@ -1,5 +1,5 @@
 import AnimatedLayout from '@/app/_components/animation/AnimatedLayout';
-import NoteCard from '../../_components/NoteCard';
+import { NoteCardContent } from '../../_components/NoteCard';
 export default async function NoteDetail({
   params,
 }: {
@@ -9,7 +9,7 @@ export default async function NoteDetail({
   return (
     <AnimatedLayout>
       <div className="flex h-screen flex-col items-center justify-center">
-        <NoteCard index={Number(id)} />
+        <NoteCardContent content={`Note ${id}`} id={Number(id)} />
       </div>
     </AnimatedLayout>
   );

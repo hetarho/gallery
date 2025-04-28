@@ -1,15 +1,46 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 
-export default function NoteCard({ index }: { index: number }) {
+export function NoteCard({
+  index,
+  title,
+  content,
+  className,
+}: {
+  index: number;
+  title: string;
+  content: string;
+  className?: string;
+}) {
   return (
-    <motion.div
-      layoutId={`note-${index}`}
-      className="border-mono-500 flex h-20 w-20 items-center justify-center rounded-2xl border-4 text-4xl font-bold"
-    >
-      <Link href={`/detail/${index}`}>{index}</Link>
+    <div>
+      <motion.div layoutId={`note-${index}`} className={className}>
+        <NoteCardHeader title={title} id={index} />
+        <NoteCardContent content={content} id={index} />
+      </motion.div>
+    </div>
+  );
+}
+
+export function NoteCardHeader({ title, id }: { title: string; id: number }) {
+  return (
+    <motion.div layoutId={`note-header-${id}`}>
+      <h1>{title}</h1>
+    </motion.div>
+  );
+}
+
+export function NoteCardContent({
+  content,
+  id,
+}: {
+  content: string;
+  id: number;
+}) {
+  return (
+    <motion.div layoutId={`note-content-${id}`}>
+      <p>{content}</p>
     </motion.div>
   );
 }

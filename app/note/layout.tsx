@@ -6,9 +6,9 @@ export default function NoteLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col">
+    <div className="flex h-screen flex-col">
       <NoteHeader />
-      {children}
+      <div className="flex-1 overflow-auto">{children}</div>
     </div>
   );
 }

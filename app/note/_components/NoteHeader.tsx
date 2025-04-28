@@ -3,17 +3,18 @@
 import { usePathname } from 'next/navigation';
 import ThemeSwitch from './ThemeSwitch';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
+import { NoteCardHeader } from './NoteCard';
 export default function NoteHeader() {
   const pathname = usePathname();
   const isDetail = pathname.includes('/detail/');
-  const [title, setTitle] = useState('');
 
-  useEffect(() => {
+  const title = useMemo(() => {
     if (isDetail) {
-      setTitle(pathname.split('/').pop() || '');
+      const id = pathname.split('/').pop();
+      return <NoteCardHeader title={`Note ${id}`} id={Number(id)} />;
     } else {
-      setTitle('HaeRam note');
+      return 'HaeRam note';
     }
   }, [isDetail, pathname]);
 
@@ -21,7 +22,7 @@ export default function NoteHeader() {
     <header className="flex items-center justify-between px-8 py-4">
       {isDetail && (
         <Link href="/" className="text-2xl font-bold">
-          Back
+          Home
         </Link>
       )}
       <h1 className="text-2xl font-bold">{title}</h1>
