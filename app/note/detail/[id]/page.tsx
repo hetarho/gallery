@@ -7,7 +7,7 @@ export default async function NoteDetail({
 }) {
   const { id } = await params;
 
-  const cardImage = `/note/default${`${(Number(id) % 2) + 1}`.padStart(2, '0')}.png`;
+  const cardImage = `/note/default${`${(Number(id) % 3) + 1}`.padStart(2, '0')}.png`;
   return (
     <AnimatedLayout>
       <div className="flex h-screen flex-col items-center justify-center">

@@ -9,7 +9,7 @@ import { AspectRatio } from '../_components/ui/aspect-ratio';
 export default function Note() {
   const CARD_NUM = 20;
   const cardImages = Array.from({ length: CARD_NUM }).map(() => {
-    const index = `${Math.round(Math.random()) + 1}`.padStart(2, '0');
+    const index = `${Math.round(Math.random() * 2) + 1}`.padStart(2, '0');
     return `/note/default${index}.png`;
   });
 
