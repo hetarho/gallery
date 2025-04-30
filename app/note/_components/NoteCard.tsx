@@ -1,46 +1,43 @@
 'use client';
 
+import { cn } from '@/app/_lib/utils';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
-export function NoteCard({
-  index,
-  title,
-  content,
-  className,
-}: {
+type NoteCardProps = React.PropsWithChildren<{
   index: number;
-  title: string;
-  content: string;
   className?: string;
-}) {
+}>;
+
+export function NoteCard({ index, children, className }: NoteCardProps) {
   return (
-    <div>
-      <motion.div layoutId={`note-${index}`} className={className}>
-        <NoteCardHeader title={title} id={index} />
-        <NoteCardContent content={content} id={index} />
-      </motion.div>
-    </div>
+    <motion.div
+      layoutId={`note-${index}`}
+      className={cn('overflow-hidden', className)}
+    >
+      {children}
+    </motion.div>
   );
 }
 
 export function NoteCardHeader({ title, id }: { title: string; id: number }) {
   return (
-    <motion.div layoutId={`note-header-${id}`}>
+    <motion.div
+      layoutId={`note-header-${id}`}
+      className="absolute right-1 bottom-1 z-10"
+    >
       <h1>{title}</h1>
     </motion.div>
   );
 }
 
-export function NoteCardContent({
-  content,
-  id,
-}: {
-  content: string;
-  id: number;
-}) {
+export function NoteCardImage({ id, src }: { id: number; src: string }) {
   return (
-    <motion.div layoutId={`note-content-${id}`}>
-      <p>{content}</p>
+    <motion.div
+      layoutId={`note-content-${id}`}
+      className="h-full w-full rounded-md"
+    >
+      <Image src={src} alt={src} fill className="object-cover"></Image>
     </motion.div>
   );
 }

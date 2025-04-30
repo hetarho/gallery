@@ -1,15 +1,17 @@
 import AnimatedLayout from '@/app/_components/animation/AnimatedLayout';
-import { NoteCardContent } from '../../_components/NoteCard';
+import { NoteCardImage } from '../../_components/NoteCard';
 export default async function NoteDetail({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+
+  const cardImage = `/note/default${`${(Number(id) % 2) + 1}`.padStart(2, '0')}.png`;
   return (
     <AnimatedLayout>
       <div className="flex h-screen flex-col items-center justify-center">
-        <NoteCardContent content={`Note ${id}`} id={Number(id)} />
+        <NoteCardImage src={cardImage} id={Number(id)} />
       </div>
     </AnimatedLayout>
   );

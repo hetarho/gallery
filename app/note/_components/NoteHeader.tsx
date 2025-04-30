@@ -19,7 +19,7 @@ export default function NoteHeader() {
   }, [isDetail, pathname]);
 
   return (
-    <header className="flex items-center justify-between px-8 py-4">
+    <header className="flex items-center justify-between px-8 py-4 z-10">
       {isDetail && (
         <Link href="/" className="text-2xl font-bold">
           Home
